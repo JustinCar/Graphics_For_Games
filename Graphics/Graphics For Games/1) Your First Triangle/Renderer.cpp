@@ -1,7 +1,8 @@
 #include "Renderer.h"
 
 Renderer::Renderer(Window &parent) : OGLRenderer(parent)	{
-	triangle = Mesh::GenerateTriangle();
+	//triangle = Mesh::GenerateTriangle();
+	triangle = Mesh::GenerateQuad();
 
 	currentShader = new Shader(SHADERDIR"basicVertex.glsl",
 		SHADERDIR"colourFragment.glsl");

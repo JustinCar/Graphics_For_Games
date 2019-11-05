@@ -34,6 +34,7 @@ int main() {
 			renderer.ToggleRepeating();
 		}
 
+		renderer.UpdateScene(w.GetTimer()->GetTimedMS());
 		renderer.RenderScene();
 	}
 

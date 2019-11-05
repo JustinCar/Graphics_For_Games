@@ -168,6 +168,7 @@ OGLRenderer::~OGLRenderer(void)	{
 	wglDeleteContext(renderContext);
 }
 
+
 /*
 Returns TRUE if everything in the constructor has gone to plan.
 Check this to end the application if necessary...

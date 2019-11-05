@@ -22,12 +22,18 @@ public:
 	Camera(void){
 		yaw		= 0.0f;
 		pitch	= 0.0f;
+		roll = 0.0f;
+		xSpeed = 1.0f;
+		ySpeed = 1.0f;
 	};
 
-	Camera(float pitch, float yaw, Vector3 position){
+	Camera(float pitch, float yaw, float roll, Vector3 position){
 		this->pitch		= pitch;
 		this->yaw		= yaw;
+		this->roll = roll;
 		this->position	= position;
+		xSpeed = 1.0f;
+		ySpeed = 1.0f;
 	}
 
 	~Camera(void){};
@@ -53,8 +59,21 @@ public:
 	//Sets pitch, in degrees
 	void	SetPitch(float p) {pitch = p;}
 
+	//Gets xSpeed
+	float	GetXSpeed() const { return xSpeed; }
+	//Sets xSpeed
+	void	SetXSpeed(float x) { xSpeed = x; }
+
+	//Gets ySpeed
+	float	GetYSpeed() const { return ySpeed; }
+	//Sets ySpeed
+	void	SetYSpeed(float y) { ySpeed = y; }
+
 protected:
+	float xSpeed;
+	float ySpeed;
 	float	yaw;
 	float	pitch;
+	float	roll;
 	Vector3 position;
 };

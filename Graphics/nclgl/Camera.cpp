@@ -15,7 +15,7 @@ void Camera::UpdateCamera(float msec)	{
 	pitch = max(pitch,-90.0f);
 
 	if(yaw <0) {
-		yaw+= 360.0f;
+		yaw += 360.0f;
 	}
 	if(yaw > 360.0f) {
 		yaw -= 360.0f;
@@ -23,25 +23,53 @@ void Camera::UpdateCamera(float msec)	{
 
 	msec *= 5.0f;
 
-	if(Window::GetKeyboard()->KeyDown(KEYBOARD_W)) {
-		position += Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(0,0,-1) * msec;
+	// Roll
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_Q)) {
+		roll -= 1.0f;
 	}
+
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_E)) {
+		roll += 1.0f;
+	}
+
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_3)) {
+		xSpeed += 0.1f;
+	}
+
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_4)) {
+		xSpeed -= 0.1f;
+	}
+
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_5)) {
+		ySpeed += 0.1f;
+	}
+
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_6)) {
+		ySpeed -= 0.1f;
+	}
+
+	if(Window::GetKeyboard()->KeyDown(KEYBOARD_W)) {
+		position += Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(0,0,-1) * (msec * xSpeed);
+	}
+
 	if(Window::GetKeyboard()->KeyDown(KEYBOARD_S)) {
-		position -= Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(0,0,-1) * msec;
+		position -= Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(0,0,-1) * (msec * xSpeed);
 	}
 
 	if(Window::GetKeyboard()->KeyDown(KEYBOARD_A)) {
-		position += Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(-1,0,0) * msec;
+		position += Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(-1,0,0) * (msec * xSpeed);
 	}
+
 	if(Window::GetKeyboard()->KeyDown(KEYBOARD_D)) {
-		position -= Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(-1,0,0) * msec;
+		position -= Matrix4::Rotation(yaw, Vector3(0,1,0)) * Vector3(-1,0,0) * (msec * xSpeed);
 	}
 
 	if(Window::GetKeyboard()->KeyDown(KEYBOARD_SHIFT)) {
-		position.y += msec;
+		position.y += (msec * ySpeed);
 	}
+
 	if(Window::GetKeyboard()->KeyDown(KEYBOARD_SPACE)) {
-		position.y -= msec;
+		position.y -= (msec * ySpeed);
 	}
 }
 
@@ -54,5 +82,6 @@ Matrix4 Camera::BuildViewMatrix()	{
 	//using the negative values ;). The matrix multiplication order is important!
 	return	Matrix4::Rotation(-pitch, Vector3(1,0,0)) * 
 			Matrix4::Rotation(-yaw, Vector3(0,1,0)) * 
+			Matrix4::Rotation(-roll, Vector3(0, 0, 1)) *
 			Matrix4::Translation(-position);
 };

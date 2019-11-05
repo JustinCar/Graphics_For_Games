@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Tutorial10.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{eb8b8bf8-a134-404f-9e2f-e30f6d20fb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{d7caf320-82a1-4919-ae3e-2927d90fdf58}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
