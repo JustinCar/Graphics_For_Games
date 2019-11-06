@@ -6,7 +6,11 @@ bool Frustum::InsideFrustum(SceneNode & n) {
 			return false; // scenenode is outside this plane !
 		}
 	}
-	return true; // Scenenode is inside every plane ...}void Frustum::FromMatrix(const Matrix4& mat) {
+	return true;
+}
+
+
+void Frustum::FromMatrix(const Matrix4& mat) {
 	Vector3 xaxis = Vector3(mat.values[0], mat.values[4], mat.values[8]);
 	Vector3 yaxis = Vector3(mat.values[1], mat.values[5], mat.values[9]);
 	Vector3 zaxis = Vector3(mat.values[2], mat.values[6], mat.values[10]);

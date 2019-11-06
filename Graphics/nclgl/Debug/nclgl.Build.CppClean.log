@@ -15,6 +15,9 @@ h:\github\graphics_for_games\graphics\nclgl\debug\matrix4.obj
 h:\github\graphics_for_games\graphics\nclgl\debug\keyboard.obj
 h:\github\graphics_for_games\graphics\nclgl\debug\gametimer.obj
 h:\github\graphics_for_games\graphics\nclgl\debug\camera.obj
+h:\github\graphics_for_games\graphics\nclgl\debug\scenenode.obj
+h:\github\graphics_for_games\graphics\nclgl\debug\plane.obj
+h:\github\graphics_for_games\graphics\nclgl\debug\frustum.obj
 h:\github\graphics_for_games\graphics\graphics for games\debug\nclgl.lib
 h:\github\graphics_for_games\graphics\graphics for games\debug\nclgl.pdb
 h:\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.command.1.tlog

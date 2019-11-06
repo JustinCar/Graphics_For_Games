@@ -16,7 +16,10 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		TEXTUREDIR "stainedglass.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0));
 	
 	if (!currentShader -> LinkProgram() || !quad -> GetTexture()) {
-		return;	}	root = new SceneNode();
+		return;
+	}
+
+	root = new SceneNode();
 	
 	for (int i = 0; i < 5; ++i) {
 		SceneNode* s = new SceneNode();
@@ -29,15 +32,23 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		root -> AddChild(s);
 	}
 
-		root -> AddChild(new CubeRobot());		glEnable(GL_DEPTH_TEST);
+		root -> AddChild(new CubeRobot());
+
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		init = true;
-		}Renderer ::~Renderer(void) {
+		
+}
+
+Renderer ::~Renderer(void) {
 	delete root;
 	delete quad;
 	delete camera;
-	CubeRobot::DeleteCube();}void Renderer::UpdateScene(float msec) {
+	CubeRobot::DeleteCube();
+}
+
+void Renderer::UpdateScene(float msec) {
 	camera -> UpdateCamera(msec);
 	viewMatrix = camera -> BuildViewMatrix();
 	frameFrustum.FromMatrix(projMatrix * viewMatrix);
@@ -72,7 +83,10 @@ void Renderer::SortNodeLists() {
 		SceneNode::CompareByCameraDistance);
 	std::sort(nodeList.begin(),
 		nodeList.end(),
-		SceneNode::CompareByCameraDistance);}void Renderer::DrawNodes() {
+		SceneNode::CompareByCameraDistance);
+}
+
+void Renderer::DrawNodes() {
 	for (vector<SceneNode*>::const_iterator i = nodeList.begin();
 		i != nodeList.end(); ++i) {
 		DrawNode((*i));
@@ -98,7 +112,10 @@ void Renderer::DrawNode(SceneNode* n) {
 				"useTexture"), (int)n -> GetMesh() -> GetTexture());
 
 			n -> Draw(*this);
-	}}void Renderer::RenderScene() {
+	}
+}
+
+void Renderer::RenderScene() {
 	BuildNodeLists(root);
 	SortNodeLists();
 	
@@ -118,4 +135,5 @@ void Renderer::DrawNode(SceneNode* n) {
 
 void Renderer::ClearNodeLists() {
 	transparentNodeList.clear();
-	nodeList.clear();}
+	nodeList.clear();
+}

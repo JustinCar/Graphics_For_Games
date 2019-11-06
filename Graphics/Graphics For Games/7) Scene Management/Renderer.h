@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../../nclgl/CubeRobot.h"
 #include "../../nclgl/OGLRenderer.h"
 #include "../../nclgl/Camera.h"
@@ -29,5 +28,6 @@ protected:
 	
 	Frustum frameFrustum;
 
-	vector <SceneNode*> transparentNodeList;
-	vector <SceneNode*> nodeList;};
+	vector<SceneNode*> transparentNodeList;
+	vector<SceneNode*> nodeList;
+};
