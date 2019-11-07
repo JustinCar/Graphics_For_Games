@@ -24,6 +24,7 @@ _-_-_-_-_-_-_-""  ""
 
 #include "SOIL.h"
 
+#include "Light.h"
 #include "Vector4.h"
 #include "Vector3.h"
 #include "Vector2.h"
@@ -119,6 +120,7 @@ protected:
 	void			SetCurrentShader(Shader*s);
 
 	void			SetTextureRepeating(GLuint target, bool state);
+	void			SetShaderLight(const Light& l);
 
 	//void			SetShaderLight(const Light &l);
 

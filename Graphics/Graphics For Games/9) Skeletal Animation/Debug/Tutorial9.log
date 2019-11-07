@@ -1,1 +1,4 @@
-﻿
+﻿  Renderer.cpp
+H:\GitHub\Graphics_For_Games\Graphics\Graphics For Games\9) Skeletal Animation\Renderer.cpp(56,61): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+H:\GitHub\Graphics_For_Games\Graphics\Graphics For Games\9) Skeletal Animation\Renderer.cpp(56,49): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  Tutorial9.vcxproj -> H:\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\Tutorial 09 - Skeletal Animation.exe

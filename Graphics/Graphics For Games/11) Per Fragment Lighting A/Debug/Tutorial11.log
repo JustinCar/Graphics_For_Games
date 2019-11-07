@@ -1,1 +1,9 @@
-﻿
+﻿  Renderer.cpp
+  Tutorial11.cpp
+  Generating Code...
+LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32.lib(glew.obj)' is imported by 'Renderer.obj'
+LINK : warning LNK4286: symbol '___glewUniform1i' defined in 'glew32.lib(glew.obj)' is imported by 'Renderer.obj'
+LINK : warning LNK4286: symbol '___glewUniform3fv' defined in 'glew32.lib(glew.obj)' is imported by 'Renderer.obj'
+LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32.lib(glew.obj)' is imported by 'Renderer.obj'
+Renderer.obj : error LNK2019: unresolved external symbol "protected: void __thiscall OGLRenderer::SetShaderLight(class Light const &)" (?SetShaderLight@OGLRenderer@@IAEXABVLight@@@Z) referenced in function "public: virtual void __thiscall Renderer::RenderScene(void)" (?RenderScene@Renderer@@UAEXXZ)
+H:\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\Tutorial 11 - Real-time Lighting A.exe : fatal error LNK1120: 1 unresolved externals

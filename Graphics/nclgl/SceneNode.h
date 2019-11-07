@@ -47,7 +47,9 @@ public:
 	
 	static bool CompareByCameraDistance(SceneNode* a, SceneNode* b) {
 		return (a -> distanceFromCamera <
-			b -> distanceFromCamera) ? true : false;	}
+			b -> distanceFromCamera) ? true : false;
+	}
+
 
 protected:
 	SceneNode* parent;
