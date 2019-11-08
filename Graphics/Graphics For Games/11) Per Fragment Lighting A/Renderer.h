@@ -12,6 +12,7 @@ public:
 	virtual void RenderScene();
 	virtual void UpdateScene(float msec);
 
+
 protected:
 	Mesh* heightMap;
 	Camera* camera;

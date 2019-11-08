@@ -168,7 +168,6 @@ OGLRenderer::~OGLRenderer(void)	{
 	wglDeleteContext(renderContext);
 }
 
-
 /*
 Returns TRUE if everything in the constructor has gone to plan.
 Check this to end the application if necessary...
@@ -312,7 +311,6 @@ void	OGLRenderer::DrawDebugPerspective(Matrix4*matrix)  {
 	SetCurrentShader(currentShader);
 }
 
-
 void	OGLRenderer::DrawDebugOrtho(Matrix4*matrix) {
 	glUseProgram(debugDrawShader->GetProgram());
 
@@ -386,9 +384,6 @@ void	OGLRenderer::DrawDebugCircle(DebugDrawMode mode, const Vector3 &at, const f
 	}
 }
 
-
-
-
 DebugDrawData::DebugDrawData() {
 	glGenVertexArrays(1, &array);
 	glGenBuffers(2, buffers);	
@@ -420,11 +415,12 @@ void DebugDrawData::Draw() {
 }
 
 void OGLRenderer::SetShaderLight(const Light& l) {
-	glUniform3fv(glGetUniformLocation(currentShader -> GetProgram(),
+	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
 		"lightPos"), 1, (float*)& l.GetPosition());
 
-	glUniform4fv(glGetUniformLocation(currentShader -> GetProgram(),
+	glUniform4fv(glGetUniformLocation(currentShader->GetProgram(),
 		"lightColour"), 1, (float*)& l.GetColour());
-	
-	glUniform1f(glGetUniformLocation(currentShader -> GetProgram(),
-		"lightRadius"), l.GetRadius());}
+
+	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
+		"lightRadius"), l.GetRadius());
+}

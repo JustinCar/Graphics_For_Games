@@ -2,17 +2,16 @@
   CubeRobot.cpp
   Frustum.cpp
   HeightMap.cpp
+  Light.cpp
   MD5Anim.cpp
   MD5FileData.cpp
   MD5Mesh.cpp
   MD5Node.cpp
-  Matrix4.cpp
   Mesh.cpp
   OBJMesh.cpp
   OGLRenderer.cpp
-  Quaternion.cpp
   SceneNode.cpp
   Shader.cpp
   Window.cpp
   Generating Code...
-  nclgl.vcxproj -> H:\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\nclgl.lib
+  nclgl.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\nclgl.lib

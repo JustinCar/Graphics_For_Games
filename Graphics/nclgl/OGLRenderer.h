@@ -120,7 +120,8 @@ protected:
 	void			SetCurrentShader(Shader*s);
 
 	void			SetTextureRepeating(GLuint target, bool state);
-	void			SetShaderLight(const Light& l);
+	void			SetShaderLight(const Light& l);
+
 
 	//void			SetShaderLight(const Light &l);
 

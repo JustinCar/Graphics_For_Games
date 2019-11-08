@@ -5,6 +5,11 @@
 
 class Light {
 public:
+	Light() {
+		this->position = Vector3 (0, 0, 0);
+		this->colour = Vector4(0, 0, 0, 0);
+		this->radius = 1.0f;
+	}
 	Light(Vector3 position, Vector4 colour, float radius) {
 		this -> position = position;
 		this -> colour = colour;
@@ -23,4 +28,5 @@ public:
 protected:
 	Vector3 position;
 	Vector4 colour;
-	float radius;};
+	float radius;
+};

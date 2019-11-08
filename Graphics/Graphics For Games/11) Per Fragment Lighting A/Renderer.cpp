@@ -14,7 +14,9 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	if (!currentShader -> LinkProgram() || !heightMap -> GetTexture()) {
 		return;
 	}
-	SetTextureRepeating(heightMap -> GetTexture(), true);	light = new Light(Vector3((RAW_HEIGHT * HEIGHTMAP_X / 2.0f),
+	SetTextureRepeating(heightMap -> GetTexture(), true);
+
+	light = new Light(Vector3((RAW_HEIGHT * HEIGHTMAP_X / 2.0f),
 		500.0f, (RAW_HEIGHT * HEIGHTMAP_Z / 2.0f)),
 		Vector4(1, 1, 1, 1), (RAW_WIDTH * HEIGHTMAP_X) / 2.0f);
 
@@ -33,7 +35,13 @@ Renderer ::~Renderer(void) {
 
 void Renderer::UpdateScene(float msec) {
 	camera->UpdateCamera(msec);
-	viewMatrix = camera->BuildViewMatrix();}void Renderer::RenderScene() {
+	viewMatrix = camera->BuildViewMatrix();
+}
+
+
+
+
+void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
 	glUseProgram(currentShader -> GetProgram());
