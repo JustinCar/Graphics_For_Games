@@ -45,7 +45,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\GLEW\include;..\..\SOIL\;..\nclgl;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\GLEW\lib;..\..\SOIL\$(Configuration);..\$(Configuration)\;..\..\nclgl\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\GLEW\lib\$(Configuration);..\..\SOIL\$(Configuration)\;..\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -67,6 +67,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\GLEW\lib\Release\glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

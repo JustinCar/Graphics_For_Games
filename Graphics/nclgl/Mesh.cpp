@@ -22,6 +22,9 @@ Mesh::Mesh(void) {
 
 	texture = 0;
 	texture2 = 0;
+	texture3 = 0;
+	texture4 = 0;
+	texture5 = 0;
 	textureCoords = NULL;
 
 	normals = NULL;
@@ -228,6 +231,18 @@ void Mesh::Draw() {
 	if (texture2) {
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
+	}
+	if (texture3) {
+		glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, texture3);
+	}
+	if (texture4) {
+		glActiveTexture(GL_TEXTURE0 + 3);
+		glBindTexture(GL_TEXTURE_2D, texture4);
+	}
+	if (texture5) {
+		glActiveTexture(GL_TEXTURE0 + 4);
+		glBindTexture(GL_TEXTURE_2D, texture5);
 	}
 
 	glBindVertexArray(arrayObject);

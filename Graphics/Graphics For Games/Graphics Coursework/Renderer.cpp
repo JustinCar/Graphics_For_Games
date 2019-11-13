@@ -18,22 +18,51 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR "skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
-		SHADERDIR "PerPixelFragment.glsl");
+		SHADERDIR "CourseWork/TerrainFragment.glsl");
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
 		!skyboxShader->LinkProgram()) {
 		return;
 	}
 
-	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.TGA",
+	treeData = new MD5FileData(MESHDIR "CourseWork/Tree.obj");
+	treeNode = new MD5Node(*treeData);
+
+	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
 	terrain->SetTexture(SOIL_load_OGL_texture(
-		TEXTUREDIR "Barren Reds.JPG", SOIL_LOAD_AUTO,
+		TEXTUREDIR "Coursework/stone.png", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
-	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMap180Percent8bit.png",
+	terrain->SetTexture2(SOIL_load_OGL_texture(
+		TEXTUREDIR "Coursework/grass.png", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	terrain->SetTexture3(SOIL_load_OGL_texture(
+		TEXTUREDIR "Coursework/snow.png", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	terrain->SetTexture4(SOIL_load_OGL_texture(
+		TEXTUREDIR "Coursework/water.png", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	terrain->SetTexture5(SOIL_load_OGL_texture(
+		TEXTUREDIR "Coursework/lava.png", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	/*terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapSmall.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);*/
+	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapVSmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+	//terrainGrassMap = terrainStoneMap = terrainSnowMap = terrainHeightMap;
+		
+ 	terrainGrassMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/grassmapVsmall.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
+	terrainStoneMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/stonemapVsmall.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
+	terrainSnowMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/snowmapVsmall.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
 
 	//terrain->SetBumpMap(SOIL_load_OGL_texture(
 	//	TEXTUREDIR "Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
@@ -53,6 +82,10 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 
 	SetTextureRepeating(quad->GetTexture(), true);
 	SetTextureRepeating(terrain->GetTexture(), true);
+	SetTextureRepeating(terrain->GetTexture2(), true);
+	SetTextureRepeating(terrain->GetTexture3(), true);
+	SetTextureRepeating(terrain->GetTexture4(), true);
+	SetTextureRepeating(terrain->GetTexture5(), true);
 	//SetTextureRepeating(heightMap->GetBumpMap(), true);
 
 	init = true;
@@ -76,18 +109,39 @@ Renderer ::~Renderer(void) {
 	delete skyboxShader;
 	delete lightShader;
 	delete light;
+	delete treeData;
+	delete treeNode;
 	currentShader = 0;
+}
+
+void Renderer::reloadShaders() 
+{
+
+	reflectShader = new Shader(SHADERDIR "PerPixelVertex.glsl",
+		SHADERDIR "reflectFragment.glsl");
+	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
+		SHADERDIR "skyboxFragment.glsl");
+	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
+		SHADERDIR "CourseWork/TerrainFragment.glsl");
+
+	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
+		!skyboxShader->LinkProgram()) {
+		return;
+	}
 }
 
 void Renderer::UpdateScene(float msec) {
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
 	waterRotate += msec / 30000.0f;
+	//treeNode->Update(msec);
 
 }
 
 void Renderer::RenderScene(float msec) {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+	//treeNode -> Draw(*this);
 
 	DrawSkybox();
 
@@ -114,19 +168,54 @@ void Renderer::DrawTerrain(float msec) {
 	SetCurrentShader(lightShader);
 	SetShaderLight(*light);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, terrainHeightMap);
 
 	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
 		"cameraPos"), 1, (float*)& camera->GetPosition());
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetTexture());
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"diffuseTex"), 0);
+		"stoneTex"), 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetTexture2());
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"grassTex"), 1);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetTexture3());
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"snowTex"), 2);
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetTexture4());
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"waterTex"), 3);
+
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetTexture5());
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"lavaTex"), 4);
+
 
 	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
 		"time"), msec);
 
-	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "heightMap"), 1);
+	glActiveTexture(GL_TEXTURE6);
+	glBindTexture(GL_TEXTURE_2D, terrainHeightMap);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "heightMap"), 6);
+
+	glActiveTexture(GL_TEXTURE7);
+	glBindTexture(GL_TEXTURE_2D, terrainGrassMap);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "grassMap"), 7);
+
+	glActiveTexture(GL_TEXTURE8);
+	glBindTexture(GL_TEXTURE_2D, terrainStoneMap);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "stoneMap"), 8);
+
+	glActiveTexture(GL_TEXTURE9);
+	glBindTexture(GL_TEXTURE_2D, terrainSnowMap);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "snowMap"), 9);
 
 	//glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
 	//	"bumpTex"), 1);
@@ -163,7 +252,7 @@ void Renderer::DrawLava() {
 	float heightZ = (1000 * 32 / 2.0f);
 
 	modelMatrix =
-		Matrix4::Translation(Vector3(heightX, 2900, heightZ)) *
+		Matrix4::Translation(Vector3(heightX, 1700, heightZ)) *
 		Matrix4::Scale(Vector3(heightX * 2, 1, heightZ * 2)) *
 		Matrix4::Rotation(90, Vector3(1.0f, 0.0f, 0.0f));
 

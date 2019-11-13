@@ -23,6 +23,15 @@ public:
 	void SetTexture2(GLuint tex) { texture2 = tex; }
 	GLuint GetTexture2() { return texture2; }
 
+	void SetTexture3(GLuint tex) { texture3 = tex; }
+	GLuint GetTexture3() { return texture3; }
+
+	void SetTexture4(GLuint tex) { texture4 = tex; }
+	GLuint GetTexture4() { return texture4; }
+
+	void SetTexture5(GLuint tex) { texture5 = tex; }
+	GLuint GetTexture5() { return texture5; }
+
 	void SetBumpMap(GLuint tex) { bumpTexture = tex; }
 	GLuint GetBumpMap() { return bumpTexture; }
 
@@ -47,6 +56,9 @@ protected:
 
 	GLuint texture;
 	GLuint texture2;
+	GLuint texture3;
+	GLuint texture4;
+	GLuint texture5;
 	Vector2 * textureCoords;
 
 	void GenerateTangents();

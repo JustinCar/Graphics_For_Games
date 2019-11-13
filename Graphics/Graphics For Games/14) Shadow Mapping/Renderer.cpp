@@ -17,7 +17,10 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SHADERDIR "shadowFrag.glsl");
 	
 	if (!sceneShader -> LinkProgram() || !shadowShader -> LinkProgram()) {
-		return;	}	glGenTextures(1, &shadowTex);
+		return;
+	}
+
+	glGenTextures(1, &shadowTex);
 	glBindTexture(GL_TEXTURE_2D, shadowTex);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -29,13 +32,17 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE,
 		GL_COMPARE_R_TO_TEXTURE);
 	
-	glBindTexture(GL_TEXTURE_2D, 0);	glGenFramebuffers(1, &shadowFBO);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glGenFramebuffers(1, &shadowFBO);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
 		GL_TEXTURE_2D, shadowTex, 0);
 	glDrawBuffer(GL_NONE);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);	floor = Mesh::GenerateQuad();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	floor = Mesh::GenerateQuad();
 	floor -> SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "brick.tga"
 		, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	floor -> SetBumpMap(SOIL_load_OGL_texture(TEXTUREDIR "brickDOT3.tga"
@@ -46,7 +53,10 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	projMatrix = Matrix4::Perspective(1.0f, 15000.0f,
 		(float)width / (float)height, 45.0f);
 	
-	init = true;}Renderer ::~Renderer(void) {
+	init = true;
+}
+
+Renderer ::~Renderer(void) {
 	glDeleteTextures(1, &shadowTex);
 	glDeleteFramebuffers(1, &shadowFBO);
 	delete camera;
@@ -62,13 +72,19 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 
 void Renderer::UpdateScene(float msec) {
 	camera -> UpdateCamera(msec);
-	hellNode -> Update(msec);}void Renderer::RenderScene() {
+	hellNode -> Update(msec);
+}
+
+void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
 	DrawShadowScene(); // First render pass ...
 	DrawCombinedScene(); // Second render pass ...
 
-	SwapBuffers();}void Renderer::DrawShadowScene() {
+	SwapBuffers();
+}
+
+void Renderer::DrawShadowScene() {
 	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
 	
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -77,7 +93,8 @@ void Renderer::UpdateScene(float msec) {
 	
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	
-	SetCurrentShader(shadowShader);	viewMatrix = Matrix4::BuildViewMatrix(
+	SetCurrentShader(shadowShader);
+	viewMatrix = Matrix4::BuildViewMatrix(
 		light -> GetPosition(), Vector3(0, 0, 0));
 	textureMatrix = biasMatrix * (projMatrix * viewMatrix);
 	
@@ -91,7 +108,10 @@ void Renderer::UpdateScene(float msec) {
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glViewport(0, 0, width, height);
 	
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);}void Renderer::DrawCombinedScene() {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer::DrawCombinedScene() {
 	SetCurrentShader(sceneShader);
 	glUniform1i(glGetUniformLocation(currentShader -> GetProgram(),
 		"diffuseTex"), 0);
@@ -114,7 +134,10 @@ void Renderer::UpdateScene(float msec) {
 	DrawFloor();
 	DrawMesh();
 	
-	glUseProgram(0);}void Renderer::DrawMesh() {
+	glUseProgram(0);
+}
+
+void Renderer::DrawMesh() {
 	modelMatrix.ToIdentity();
 	
 	Matrix4 tempMatrix = textureMatrix * modelMatrix;
@@ -138,4 +161,5 @@ void Renderer::DrawFloor() {
 	glUniformMatrix4fv(glGetUniformLocation(currentShader -> GetProgram()
 		, "modelMatrix"), 1, false, *&modelMatrix.values);
 	
-	floor -> Draw();}
+	floor -> Draw();
+}

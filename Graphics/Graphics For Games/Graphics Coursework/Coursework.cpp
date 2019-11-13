@@ -18,6 +18,12 @@ int main() {
 	w.ShowOSPointer(false);
 
 	while (w.UpdateWindow() && !Window::GetKeyboard()->KeyDown(KEYBOARD_ESCAPE)) {
+
+	
+		if (Window::GetKeyboard()->KeyDown(KEYBOARD_R)) {
+			renderer.reloadShaders();
+		}
+
 		renderer.UpdateScene(w.GetTimer()->GetTimedMS());
 		renderer.RenderScene(w.GetTimer()->GetMS());
 	}

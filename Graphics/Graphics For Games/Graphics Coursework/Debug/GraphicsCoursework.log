@@ -1,2 +1,6 @@
 ﻿  Renderer.cpp
-  GraphicsCoursework.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\GraphicsCoursework.exe
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Renderer.h(6,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Renderer.cpp(29,35): error C2027:  use of undefined type 'MD5Node'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\MD5FileData.h(185): message :  see declaration of 'MD5Node'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Renderer.cpp(113,17): warning C4150:  deletion of pointer to incomplete type 'MD5Node'; no destructor called
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\MD5FileData.h(185): message :  see declaration of 'MD5Node'
