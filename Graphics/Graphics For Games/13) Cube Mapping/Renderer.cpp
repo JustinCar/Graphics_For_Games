@@ -51,7 +51,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 
 	SetTextureRepeating(quad->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetTexture(), true);
-	SetTextureRepeating(heightMap->GetBumpMap(), true);	init = true;
+	SetTextureRepeating(heightMap->GetBumpMap(), true);
+
+	init = true;
 	waterRotate = 0.0f;
 
 	projMatrix = Matrix4::Perspective(1.0f, 15000.0f,
@@ -60,7 +62,11 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);}Renderer ::~Renderer(void) {
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+}
+
+Renderer ::~Renderer(void) {
 	delete camera;
 	delete heightMap;
 	delete quad;
@@ -68,18 +74,27 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	delete skyboxShader;
 	delete lightShader;
 	delete light;
-	currentShader = 0;}void Renderer::UpdateScene(float msec) {
+	currentShader = 0;
+}
+
+void Renderer::UpdateScene(float msec) {
 	camera -> UpdateCamera(msec);
 	viewMatrix = camera -> BuildViewMatrix();
 	waterRotate += msec / 1000.0f;
-	}void Renderer::RenderScene() {
+	
+}
+
+void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
 	DrawSkybox();
 	DrawHeightmap();
 	DrawWater();
 	
-	SwapBuffers();}void Renderer::DrawSkybox() {
+	SwapBuffers();
+}
+
+void Renderer::DrawSkybox() {
 	glDepthMask(GL_FALSE);
 	SetCurrentShader(skyboxShader);
 	
@@ -87,7 +102,10 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	quad -> Draw();
 	
 	glUseProgram(0);
-	glDepthMask(GL_TRUE);}void Renderer::DrawHeightmap() {
+	glDepthMask(GL_TRUE);
+}
+
+void Renderer::DrawHeightmap() {
 	SetCurrentShader(lightShader);
 	SetShaderLight(*light);
 	
@@ -106,7 +124,10 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	
 	heightMap -> Draw();
 	
-	glUseProgram(0);}void Renderer::DrawWater() {
+	glUseProgram(0);
+}
+
+void Renderer::DrawWater() {
 	SetCurrentShader(reflectShader);
 	SetShaderLight(*light);
 	glUniform3fv(glGetUniformLocation(currentShader -> GetProgram(),
@@ -139,4 +160,5 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 
 	quad -> Draw();
 	
-	glUseProgram(0);}
+	glUseProgram(0);
+}

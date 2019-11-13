@@ -29,5 +29,7 @@ protected:
 	
 	GLuint cubeMap;
 	
-	float waterRotate;};
+	float waterRotate;
+};
+
 

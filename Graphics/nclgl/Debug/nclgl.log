@@ -1,17 +1,27 @@
 ﻿  Camera.cpp
   CubeRobot.cpp
   Frustum.cpp
+  GameTimer.cpp
   HeightMap.cpp
+  Keyboard.cpp
   Light.cpp
+  Matrix4.cpp
   MD5Anim.cpp
   MD5FileData.cpp
   MD5Mesh.cpp
   MD5Node.cpp
   Mesh.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(133,35): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  Mouse.cpp
   OBJMesh.cpp
   OGLRenderer.cpp
+  Plane.cpp
+  Quaternion.cpp
   SceneNode.cpp
   Shader.cpp
+  Generating Code...
+  Compiling...
   Window.cpp
   Generating Code...
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(133,7): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
   nclgl.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\nclgl.lib

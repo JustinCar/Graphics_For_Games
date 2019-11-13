@@ -15,6 +15,7 @@ public:
 	virtual void Draw();
 	static Mesh* GenerateTriangle();
 	static Mesh* GenerateQuad();
+	static Mesh* GenerateFlatTerrain();
 
 	void SetTexture(GLuint tex) { texture = tex; }
 	GLuint GetTexture() { return texture; }
@@ -54,8 +55,7 @@ protected:
 		const Vector2& tb, const Vector2& tc);
 
 	Vector3* tangents;
-	GLuint bumpTexture;
-
+	GLuint bumpTexture;
 };
 
 

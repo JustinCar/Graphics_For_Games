@@ -3,7 +3,7 @@
 #include "../../nclgl/OGLRenderer.h"
 #include "../../nclgl/Camera.h"
 #include "../../nclgl/SceneNode.h"
-#include "CubeRobot.h"
+#include "../../nclgl/CubeRobot.h"
 
 class Renderer : public OGLRenderer {
 public:

@@ -23,7 +23,10 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 			
 			float radius = (RAW_WIDTH * HEIGHTMAP_X / LIGHTNUM);
 			l.SetRadius(radius);
-		}	}	heightMap = new HeightMap(TEXTUREDIR "terrain.raw");
+		}
+	}
+
+	heightMap = new HeightMap(TEXTUREDIR "terrain.raw");
 	heightMap -> SetTexture(SOIL_load_OGL_texture(
 		TEXTUREDIR "Barren Reds.JPG", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
@@ -51,10 +54,15 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	if (!combineShader -> LinkProgram()) {
 		return;
 	}
-	pointlightShader = new Shader(SHADERDIR "pointlightvert.glsl",
-		SHADERDIR "pointlightfrag.glsl");
-	if (!pointlightShader -> LinkProgram()) {
-		return;	}	glGenFramebuffers(1, &bufferFBO);
+
+	pointlightShader = new Shader(SHADERDIR "pointlightvertex.glsl",
+		SHADERDIR "pointlightfragment.glsl");
+
+	if (!pointlightShader->LinkProgram()) {
+		return;
+	}
+
+	glGenFramebuffers(1, &bufferFBO);
 	glGenFramebuffers(1, &pointLightFBO);
 	
 	GLenum buffers[2];
@@ -66,7 +74,9 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	GenerateScreenTexture(bufferColourTex);
 	GenerateScreenTexture(bufferNormalTex);
 	GenerateScreenTexture(lightEmissiveTex);
-	GenerateScreenTexture(lightSpecularTex);	// And now attach them to our FBOs
+	GenerateScreenTexture(lightSpecularTex);
+
+	// And now attach them to our FBOs
 	glBindFramebuffer(GL_FRAMEBUFFER, bufferFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 		GL_TEXTURE_2D, bufferColourTex, 0);
@@ -120,7 +130,10 @@ Renderer ::~Renderer(void) {
 	
 	glDeleteFramebuffers(1, &bufferFBO);
 	glDeleteFramebuffers(1, &pointLightFBO);
-	currentShader = 0;}void Renderer::GenerateScreenTexture(GLuint& into, bool depth) {
+	currentShader = 0;
+}
+
+void Renderer::GenerateScreenTexture(GLuint& into, bool depth) {
 	glGenTextures(1, &into);
 	glBindTexture(GL_TEXTURE_2D, into);
 	
@@ -141,14 +154,20 @@ Renderer ::~Renderer(void) {
 void Renderer::UpdateScene(float msec) {
 	camera -> UpdateCamera(msec);
 	viewMatrix = camera -> BuildViewMatrix();
-	rotation = msec * 0.01f;}void Renderer::RenderScene() {
+	rotation = msec * 0.01f;
+}
+
+void Renderer::RenderScene() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 	FillBuffers();
 	DrawPointLights();
 	CombineBuffers();
-	SwapBuffers();}void Renderer::FillBuffers() {
+	SwapBuffers();
+}
+
+void Renderer::FillBuffers() {
 	glBindFramebuffer(GL_FRAMEBUFFER, bufferFBO);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
@@ -166,7 +185,10 @@ void Renderer::UpdateScene(float msec) {
 	heightMap -> Draw();
 	
 	glUseProgram(0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);}void Renderer::DrawPointLights() {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer::DrawPointLights() {
 	SetCurrentShader(pointlightShader);
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, pointLightFBO);
@@ -226,7 +248,10 @@ void Renderer::UpdateScene(float msec) {
 			}
 	
 			sphere -> Draw();
-		}	}	glCullFace(GL_BACK);
+		}
+	}
+
+	glCullFace(GL_BACK);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1);
@@ -259,4 +284,5 @@ void Renderer::CombineBuffers() {
 	
 	quad -> Draw();
 	
-	glUseProgram(0);}
+	glUseProgram(0);
+}
