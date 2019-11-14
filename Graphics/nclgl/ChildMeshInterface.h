@@ -37,6 +37,8 @@ public:
 		}
 	}
 
+	std::vector<Mesh*> getChildren() { return children; }
+
 protected:
 	//Some Meshes have children...
 	std::vector<Mesh*>children;

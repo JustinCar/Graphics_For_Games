@@ -3,7 +3,10 @@
 #include "../../NCLGL/OGLRenderer.h"
 #include "../../NCLGL/Camera.h"
 #include "../../NCLGL/HeightMap.h"
-#include "../../NCLGL/MD5Mesh.h"#include "../../nclgl/MD5Node.h"
+#include "../../NCLGL/MD5Mesh.h"
+#include "../../nclgl/MD5Node.h"
+#include "../../nclgl/OBJMesh.h"
+
 
 class Renderer : public OGLRenderer {
 public:
@@ -19,11 +22,14 @@ protected:
 	void DrawTerrain(float msec);
 	void DrawLava();
 	void DrawSkybox();
+	void DrawTree();
 
 	Shader* lightShader;
 	Shader* reflectShader;
 	Shader* skyboxShader;
+	Shader* treeShader;
 
+	OBJMesh* tree;
 	Mesh* quad;
 	Mesh* terrain;
 	GLuint terrainHeightMap;
@@ -35,9 +41,6 @@ protected:
 	Camera* camera;
 
 	GLuint cubeMap;
-
-	MD5FileData* treeData;
-	MD5Node* treeNode;
 
 	float waterRotate;
 };

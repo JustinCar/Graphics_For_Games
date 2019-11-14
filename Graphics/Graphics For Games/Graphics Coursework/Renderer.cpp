@@ -4,6 +4,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	quad = Mesh::GenerateQuad();
 	terrain = Mesh::GenerateFlatTerrain();
+	tree = new OBJMesh(MESHDIR "CourseWork/Tree.obj");
 
 	camera->SetPosition(Vector3(1000 * 32 / 2.0f,
 		5000.0f, 1000 * 32));
@@ -19,14 +20,26 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		SHADERDIR "skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
 		SHADERDIR "CourseWork/TerrainFragment.glsl");
+	treeShader = new Shader(SHADERDIR "CourseWork/TreeVertex.glsl",
+		SHADERDIR "CourseWork/TreeFragment.glsl");
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !treeShader->LinkProgram()) {
 		return;
 	}
 
-	treeData = new MD5FileData(MESHDIR "CourseWork/Tree.obj");
-	treeNode = new MD5Node(*treeData);
+	//treeData = new MD5FileData(MESHDIR "CourseWork/Tree.obj");
+	//treeNode = new MD5Node(*treeData);
+
+	tree->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	std::vector<Mesh*> treeChildren = tree->getChildren();
+	for (unsigned int i = 0; i < treeChildren.size(); ++i) {
+		treeChildren.at(i)->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
+			SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	}
+	
 
 	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
@@ -104,13 +117,12 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 Renderer ::~Renderer(void) {
 	delete camera;
 	delete terrain;
+	delete tree;
 	delete quad;
 	delete reflectShader;
 	delete skyboxShader;
 	delete lightShader;
 	delete light;
-	delete treeData;
-	delete treeNode;
 	currentShader = 0;
 }
 
@@ -123,9 +135,11 @@ void Renderer::reloadShaders()
 		SHADERDIR "skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
 		SHADERDIR "CourseWork/TerrainFragment.glsl");
+	treeShader = new Shader(SHADERDIR "CourseWork/TreeVertex.glsl",
+		SHADERDIR "CourseWork/TreeFragment.glsl");
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !treeShader->LinkProgram()) {
 		return;
 	}
 }
@@ -141,7 +155,7 @@ void Renderer::UpdateScene(float msec) {
 void Renderer::RenderScene(float msec) {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	//treeNode -> Draw(*this);
+	DrawTree();
 
 	DrawSkybox();
 
@@ -162,6 +176,18 @@ void Renderer::DrawSkybox() {
 
 	glUseProgram(0);
 	glDepthMask(GL_TRUE);
+}
+
+void Renderer::DrawTree()
+{
+	SetCurrentShader(treeShader);
+
+	glUniform1i(glGetUniformLocation(currentShader -> GetProgram(),
+		"diffuseTex"), 0);	UpdateShaderMatrices();
+
+	tree->Draw();
+
+	glUseProgram(0);
 }
 
 void Renderer::DrawTerrain(float msec) {
