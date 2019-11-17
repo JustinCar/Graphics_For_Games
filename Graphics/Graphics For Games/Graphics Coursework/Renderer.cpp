@@ -4,7 +4,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	quad = Mesh::GenerateQuad();
 	terrain = Mesh::GenerateFlatTerrain();
-	tree = new OBJMesh(MESHDIR "CourseWork/Tree.obj");
+	tree = new OBJMesh(MESHDIR "CourseWork/TreeHD.obj");
 
 	camera->SetPosition(Vector3(1000 * 32 / 2.0f,
 		5000.0f, 1000 * 32));
@@ -18,28 +18,27 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		SHADERDIR "reflectFragment.glsl");
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR "skyboxFragment.glsl");
-	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
-		SHADERDIR "CourseWork/TerrainFragment.glsl");
-	treeShader = new Shader(SHADERDIR "CourseWork/TreeVertex.glsl",
-		SHADERDIR "CourseWork/TreeFragment.glsl");
+	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertexShadow.glsl",
+		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
+	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
+		SHADERDIR "CourseWork/TreeGrowFragment.glsl");
+	shadowShader = new Shader(SHADERDIR "shadowVert.glsl",
+		SHADERDIR "shadowFrag.glsl");
+
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram() || !treeShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()) {
 		return;
 	}
 
-	//treeData = new MD5FileData(MESHDIR "CourseWork/Tree.obj");
-	//treeNode = new MD5Node(*treeData);
-
-	tree->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
+	tree->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/Forest/bark01_bottom.tga",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	tree->GenerateNormals();
 
 	std::vector<Mesh*> treeChildren = tree->getChildren();
-	for (unsigned int i = 0; i < treeChildren.size(); ++i) {
-		treeChildren.at(i)->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
-			SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-	}
-	
+	treeChildren[0]->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/Forest/tree_branches.png",
+		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	treeChildren[0]->GenerateNormals();
 
 	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
@@ -64,11 +63,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		TEXTUREDIR "Coursework/lava.png", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
-	/*terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapSmall.png",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);*/
+
 	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapVSmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-	//terrainGrassMap = terrainStoneMap = terrainSnowMap = terrainHeightMap;
 		
  	terrainGrassMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/grassmapVsmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
@@ -77,9 +74,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	terrainSnowMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/snowmapVsmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
 
-	//terrain->SetBumpMap(SOIL_load_OGL_texture(
-	//	TEXTUREDIR "Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
-	//	SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	terrain->SetBumpMap(SOIL_load_OGL_texture(
+		TEXTUREDIR "Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
 	cubeMap = SOIL_load_OGL_cubemap(
 		TEXTUREDIR "Coursework/Left_Space.png", TEXTUREDIR "Coursework/Right_Space.png",
@@ -93,13 +90,44 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		return;
 	}
 
+	SetTextureRepeating(tree->GetTexture(), true);
+
+	SetTextureRepeating(treeChildren.at(0)->GetTexture(), true);
+
 	SetTextureRepeating(quad->GetTexture(), true);
 	SetTextureRepeating(terrain->GetTexture(), true);
 	SetTextureRepeating(terrain->GetTexture2(), true);
 	SetTextureRepeating(terrain->GetTexture3(), true);
 	SetTextureRepeating(terrain->GetTexture4(), true);
 	SetTextureRepeating(terrain->GetTexture5(), true);
-	//SetTextureRepeating(heightMap->GetBumpMap(), true);
+	SetTextureRepeating(terrain->GetBumpMap(), true);
+
+	// Shadow mapping ---------------------------
+	glGenTextures(1, &shadowTex);
+	glBindTexture(GL_TEXTURE_2D, shadowTex);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		SHADOWSIZE, SHADOWSIZE, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE,
+		GL_COMPARE_R_TO_TEXTURE);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glGenFramebuffers(1, &shadowFBO);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+		GL_TEXTURE_2D, shadowTex, 0);
+	glDrawBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	/*terrain->SetBumpMap(SOIL_load_OGL_texture(TEXTUREDIR "brickDOT3.tga"
+		, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));*/
+	// ---------------------------
 
 	init = true;
 	waterRotate = 0.0f;
@@ -115,6 +143,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 }
 
 Renderer ::~Renderer(void) {
+	glDeleteTextures(1, &shadowTex);
+	glDeleteFramebuffers(1, &shadowFBO);
+
 	delete camera;
 	delete terrain;
 	delete tree;
@@ -123,6 +154,8 @@ Renderer ::~Renderer(void) {
 	delete skyboxShader;
 	delete lightShader;
 	delete light;
+	delete shadowShader;
+
 	currentShader = 0;
 }
 
@@ -133,10 +166,11 @@ void Renderer::reloadShaders()
 		SHADERDIR "reflectFragment.glsl");
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR "skyboxFragment.glsl");
-	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertex.glsl",
-		SHADERDIR "CourseWork/TerrainFragment.glsl");
-	treeShader = new Shader(SHADERDIR "CourseWork/TreeVertex.glsl",
-		SHADERDIR "CourseWork/TreeFragment.glsl");
+	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertexShadow.glsl",
+		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
+	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
+		SHADERDIR "CourseWork/TreeGrowFragment.glsl");
+
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
 		!skyboxShader->LinkProgram() || !treeShader->LinkProgram()) {
@@ -148,23 +182,64 @@ void Renderer::UpdateScene(float msec) {
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
 	waterRotate += msec / 30000.0f;
-	//treeNode->Update(msec);
-
 }
 
 void Renderer::RenderScene(float msec) {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	DrawTree();
+	DrawShadowScene(msec); // First render pass ...
+	DrawCombinedScene(msec); // Second render pass ...
 
 	DrawSkybox();
 
-	if (msec > 10)
-		DrawTerrain(msec);
+	//DrawTerrain(msec);
 
+	/*if (msec > 10)
+	{
+		DrawTerrain(msec);
+		
+	}
+		
+	DrawTree(msec);*/
 	DrawLava();
 
+	
+
 	SwapBuffers();
+}
+
+void Renderer::DrawShadowScene(float msec) {
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	glViewport(0, 0, SHADOWSIZE, SHADOWSIZE);
+
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
+	SetCurrentShader(shadowShader);
+	viewMatrix = Matrix4::BuildViewMatrix(
+		light->GetPosition(), Vector3(0, 0, 0));
+	textureMatrix = biasMatrix * (projMatrix * viewMatrix);
+
+	UpdateShaderMatrices();
+
+	//DrawTree(msec);
+	DrawTerrain(msec);
+
+	glUseProgram(0);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glViewport(0, 0, width, height);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer::DrawCombinedScene(float msec) {
+
+	//DrawTree(msec);
+	DrawTerrain(msec);
+
+	glUseProgram(0);
 }
 
 void Renderer::DrawSkybox() {
@@ -178,13 +253,45 @@ void Renderer::DrawSkybox() {
 	glDepthMask(GL_TRUE);
 }
 
-void Renderer::DrawTree()
+void Renderer::DrawTree(float msec)
 {
 	SetCurrentShader(treeShader);
+	SetShaderLight(*light);
+
+	Vector3 treePos;
+
+
+	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
+		"treePos"), 1, (float*)& treePos);
+
+	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
+		"cameraPos"), 1, (float*)& camera->GetPosition());
 
 	glUniform1i(glGetUniformLocation(currentShader -> GetProgram(),
-		"diffuseTex"), 0);	UpdateShaderMatrices();
+		"diffuseTex"), 0);
 
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, terrainGrassMap);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "grassMap"), 1);
+
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+			"bumpTex"), 2);
+
+	/*glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, shadowTex);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"shadowTex"), 3);*/
+	
+
+	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
+		"time"), msec);
+
+	modelMatrix.ToIdentity();
+
+	modelMatrix = Matrix4::Scale(Vector3(100, 100, 100));
+	UpdateShaderMatrices();
+	viewMatrix = camera->BuildViewMatrix();
 	tree->Draw();
 
 	glUseProgram(0);
@@ -243,8 +350,18 @@ void Renderer::DrawTerrain(float msec) {
 	glBindTexture(GL_TEXTURE_2D, terrainSnowMap);
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "snowMap"), 9);
 
-	//glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-	//	"bumpTex"), 1);
+
+	glActiveTexture(GL_TEXTURE10);
+	glBindTexture(GL_TEXTURE_2D, terrain->GetBumpMap());
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"bumpTex"), 10);
+
+	glActiveTexture(GL_TEXTURE11);
+	glBindTexture(GL_TEXTURE_2D, shadowTex);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"shadowTex"), 11);
+
+	viewMatrix = camera->BuildViewMatrix();
 
 	modelMatrix.ToIdentity();
 	textureMatrix.ToIdentity();

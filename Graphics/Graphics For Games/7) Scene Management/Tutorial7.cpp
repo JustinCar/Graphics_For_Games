@@ -18,8 +18,9 @@ int main() {
 	w.ShowOSPointer(false);
 
 	while(w.UpdateWindow() && !Window::GetKeyboard()->KeyDown(KEYBOARD_ESCAPE)){
-		renderer.UpdateScene(w.GetTimer()->GetTimedMS());
-		renderer.RenderScene();
+		float t = w.GetTimer()->GetTimedMS();
+		renderer.UpdateScene(t);
+		renderer.RenderScene(t);
 	}
 
 	return 0;

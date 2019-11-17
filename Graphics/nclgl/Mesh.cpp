@@ -159,6 +159,7 @@ Mesh* Mesh::GenerateFlatTerrain()
 			m->indices[m->numIndices++] = c;
 		}
 	}
+
 	m->GenerateNormals();
 	m->GenerateTangents();
 	m->BufferData();

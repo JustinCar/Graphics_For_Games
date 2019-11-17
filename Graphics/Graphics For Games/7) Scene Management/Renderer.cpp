@@ -115,7 +115,7 @@ void Renderer::DrawNode(SceneNode* n) {
 	}
 }
 
-void Renderer::RenderScene() {
+void Renderer::RenderScene(float msec) {
 	BuildNodeLists(root);
 	SortNodeLists();
 	

@@ -2,7 +2,7 @@
 
 uniform sampler2D diffuseTex ;
 uniform sampler2D bumpTex ;
-uniform sampler2DShadow shadowTex ; // NEW !
+uniform sampler2DShadow shadowTex ;
 
 uniform vec4 lightColour ;
 uniform vec3 lightPos ;

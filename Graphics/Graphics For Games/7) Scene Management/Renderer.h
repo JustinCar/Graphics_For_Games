@@ -13,7 +13,7 @@ public:
 	virtual ~Renderer(void);
 	
 	virtual void UpdateScene(float msec);
-	virtual void RenderScene();
+	virtual void RenderScene(float msec);
 
 protected:
 	void BuildNodeLists(SceneNode* from);

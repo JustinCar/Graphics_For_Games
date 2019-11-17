@@ -34,14 +34,17 @@ public:
 
 	void SetBumpMap(GLuint tex) { bumpTexture = tex; }
 	GLuint GetBumpMap() { return bumpTexture; }
+	void GenerateNormals();
+
+	Vector4* getColours() { return colours; }
+	Vector3* getVertices() { return vertices; }
+	GLuint getNumVertices() { return numVertices; }
 
 protected:
 	void BufferData();
 
 	GLuint numIndices;
 	unsigned int* indices;
-
-	void GenerateNormals();
 	
 	Vector3* normals;
 
@@ -59,7 +62,7 @@ protected:
 	GLuint texture3;
 	GLuint texture4;
 	GLuint texture5;
-	Vector2 * textureCoords;
+	Vector2* textureCoords;
 
 	void GenerateTangents();
 	Vector3 GenerateTangent(const Vector3& a, const Vector3 & b,

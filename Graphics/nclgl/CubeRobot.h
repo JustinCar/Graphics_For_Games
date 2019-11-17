@@ -10,7 +10,7 @@ public:
 
 	static void CreateCube() {
 		OBJMesh* m = new OBJMesh();
-		m -> LoadOBJMesh(MESHDIR "cube.obj");
+		m -> LoadOBJMesh(MESHDIR "/coursework/tree.obj");
 		cube = m;
 	}
 	static void DeleteCube() { delete cube; }

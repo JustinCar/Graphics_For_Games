@@ -1,1 +1,5 @@
-﻿
+﻿  Tutorial6.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\6) Scene Graph\Tutorial6.cpp(12): error C2259:  'Renderer': cannot instantiate abstract class
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\6) Scene Graph\Tutorial6.cpp(12): message :  due to following members:
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\6) Scene Graph\Tutorial6.cpp(12): message :  'void OGLRenderer::RenderScene(float)': is abstract
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\OGLRenderer.h(100): message :  see declaration of 'OGLRenderer::RenderScene'

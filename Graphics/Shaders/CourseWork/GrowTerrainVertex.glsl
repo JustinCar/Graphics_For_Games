@@ -10,14 +10,18 @@ uniform sampler2D heightMap;
 
 in vec3 position;
 in vec4 colour;
-in vec3 normal; // New Attribute !
+in vec3 normal;
+//in vec3 tangent;
 in vec2 texCoord;
 
 out Vertex {
     vec4 colour;
     vec2 texCoord;
     vec3 normal;
+    //vec3 tangent;
+    //vec3 binormal;
     vec3 worldPos;
+    //vec4 shadowProj; 
 } OUT;
 
 float grow() 
@@ -47,11 +51,18 @@ void main ( void ) {
     mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
 
     OUT.normal = normalize (normalMatrix * normalize(normal));
+    //OUT.tangent = normalize ( normalMatrix * normalize ( tangent ));
+    //OUT.binormal = normalize ( normalMatrix *
+       // normalize ( cross ( normal , tangent )));
+        
 
     vec3 newPosition = position;
     newPosition.y = grow();
 
     OUT.worldPos = (modelMatrix * vec4(position, 1)).xyz;
+
+    //OUT.shadowProj = ( textureMatrix * vec4 ( position +( normal *1.5) ,1));
+    
     gl_Position = (projMatrix * viewMatrix * modelMatrix) *
         vec4(newPosition, 1.0);
 }

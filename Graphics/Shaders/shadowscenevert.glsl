@@ -30,7 +30,7 @@ void main ( void ) {
     OUT.normal = normalize ( normalMatrix * normalize ( normal ));
     OUT.tangent = normalize ( normalMatrix * normalize ( tangent ));
     OUT.binormal = normalize ( normalMatrix *
-    normalize ( cross ( normal , tangent )));
+        normalize ( cross ( normal , tangent )));
 
     OUT.worldPos = ( modelMatrix * vec4 ( position ,1)).xyz ;
     // New !
