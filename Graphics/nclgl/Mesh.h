@@ -34,6 +34,12 @@ public:
 
 	void SetBumpMap(GLuint tex) { bumpTexture = tex; }
 	GLuint GetBumpMap() { return bumpTexture; }
+
+	void SetBumpMap2(GLuint tex) { bumpTexture2 = tex; }
+	GLuint GetBumpMap2() { return bumpTexture2; }
+
+	void SetBumpMap3(GLuint tex) { bumpTexture3 = tex; }
+	GLuint GetBumpMap3() { return bumpTexture3; }
 	void GenerateNormals();
 
 	Vector4* getColours() { return colours; }
@@ -71,6 +77,8 @@ protected:
 
 	Vector3* tangents;
 	GLuint bumpTexture;
+	GLuint bumpTexture2;
+	GLuint bumpTexture3;
 };
 
 

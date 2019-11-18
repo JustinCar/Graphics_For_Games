@@ -10,7 +10,10 @@ uniform sampler2D grassMap;
 uniform sampler2D stoneMap;
 uniform sampler2D snowMap;
 
-uniform sampler2D bumpTex;
+//uniform sampler2D bumpTex;
+uniform sampler2D grassBump;
+uniform sampler2D stoneBump;
+uniform sampler2D snowBump;
 uniform sampler2DShadow shadowTex;
 
 uniform vec3 cameraPos;
@@ -30,9 +33,34 @@ in Vertex {
 
 out vec4 fragColour;
 
+vec3 getNormal() 
+{
+    mat3 TBN = mat3 ( IN.tangent , IN.binormal , IN.normal );
+
+    if (texture(snowMap, IN.texCoord / 32).r >= 0.4) 
+    {
+        return normalize ( TBN *
+        ( texture2D ( snowBump , IN.texCoord ).rgb * 2.0 - 1.0));
+    }
+
+    if (texture(grassMap, IN.texCoord / 32).r >= 0.5) 
+    {
+        return normalize ( TBN *
+        ( texture2D ( grassBump , IN.texCoord ).rgb * 2.0 - 1.0));
+    } 
+   
+    if (texture(stoneMap, IN.texCoord / 32).r >= 0.000000000000000000000000001) 
+    {
+        return normalize ( TBN *
+        ( texture2D ( stoneBump , IN.texCoord ).rgb * 2.0 - 1.0));
+    } 
+
+        return normalize ( TBN *
+        ( texture2D ( stoneBump , IN.texCoord ).rgb * 2.0 - 1.0));
+}
+
 vec4 getTexture() 
 {
-    //return texture(grassMap, IN.texCoord / 32);
     if (texture(snowMap, IN.texCoord / 32).r >= 0.4) 
     {
         return texture(snowTex, IN.texCoord);
@@ -55,9 +83,7 @@ void main ( void ) {
     //vec4 texture = texture ( stoneTex, IN.texCoord );
     vec4 texture = getTexture();
 
-    mat3 TBN = mat3 ( IN.tangent , IN.binormal , IN.normal );
-    vec3 normal = normalize ( TBN *
-        ( texture2D ( bumpTex , IN.texCoord ).rgb * 2.0 - 1.0));
+    vec3 normal = getNormal();
 
     vec3 incident = normalize ( lightPos - IN.worldPos );
     float lambert = max (0.0 , dot ( incident , normal ));

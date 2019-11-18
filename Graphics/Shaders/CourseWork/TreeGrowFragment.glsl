@@ -18,17 +18,20 @@ in Vertex {
     vec4 shadowProj;
 } IN;
 
-out vec4 fragColour ;
+out vec4 fragColour;
 
 void main(void){
 
-	vec4 texture  = texture(diffuseTex, IN.texCoord);
-    if (texture.r > 0.2 && texture.g > 0.2 && texture.b > 0.2) 
+	vec4 diffuse  = texture(diffuseTex, IN.texCoord);
+
+    diffuse += IN.colour;
+    if (diffuse.r > 0.2 && diffuse.g > 0.2 && diffuse.b > 0.2) 
     {
         discard;
     }
+    
     // fragColour  = texture;
-	// fragColour += IN.colour;
+	//fragColour += IN.colour;
 
 
     mat3 TBN = mat3 ( IN.tangent , IN.binormal , IN.normal );
@@ -36,7 +39,7 @@ void main(void){
         ( texture2D ( bumpTex , IN.texCoord ).rgb * 2.0 - 1.0));
 
     vec3 incident = normalize ( lightPos - IN.worldPos );
-    float lambert = max (0.0 , dot ( incident , normal ));
+    float lambert = max (0.0 , dot ( incident, normal ));
 
     float dist = length ( lightPos - IN.worldPos );
     float atten = 1.0 - clamp ( dist / lightRadius , 0.0 , 1.0);
@@ -49,13 +52,16 @@ void main(void){
     float shadow = 1.0;
 
     if  (IN.shadowProj.w > 0.0) {
-        shadow = textureProj ( shadowTex, IN.shadowProj );
+        shadow = textureProj (shadowTex, IN.shadowProj);
     }
 
     lambert *= shadow; 
 
-    vec3 colour = ( texture.rgb * lightColour.rgb );
-    colour += ( lightColour.rgb * sFactor ) * 0.33;
-    fragColour = vec4 ( colour * atten * lambert , texture.a );
-    fragColour.rgb += ( texture.rgb * lightColour.rgb ) * 0.1;
+    vec3 c = ( diffuse.rgb * lightColour.rgb );
+    c += ( lightColour.rgb * sFactor ) * 0.33;
+    fragColour = vec4 (c * atten * lambert, diffuse.a);
+    fragColour.rgb += (diffuse.rgb * lightColour.rgb) * 0.1;
+
+    //fragColour.rgb = texture2D ( bumpTex , IN.texCoord ).rgb;
+    //fragColour.rgb = IN.normal.rgb;
 }
