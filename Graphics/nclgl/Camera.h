@@ -23,8 +23,8 @@ public:
 		yaw		= 0.0f;
 		pitch	= 0.0f;
 		roll = 0.0f;
-		xSpeed = 1.0f;
-		ySpeed = 1.0f;
+		xSpeed = 0.1f;
+		ySpeed = 0.1f;
 	};
 
 	Camera(float pitch, float yaw, float roll, Vector3 position){
@@ -32,8 +32,8 @@ public:
 		this->yaw		= yaw;
 		this->roll = roll;
 		this->position	= position;
-		xSpeed = 1.0f;
-		ySpeed = 1.0f;
+		xSpeed = 0.1f;
+		ySpeed = 0.1f;
 	}
 
 	~Camera(void){};

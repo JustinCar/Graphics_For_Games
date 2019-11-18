@@ -2,6 +2,10 @@
 
 #include "Vector4.h"
 #include "Vector3.h"
+#include "Matrix4.h"
+
+class Window;
+
 
 class Light {
 public:
@@ -15,7 +19,7 @@ public:
 		this -> colour = colour;
 		this -> radius = radius;
 	}
-	 ~Light(void) {};
+	~Light(void) {};
 
 	Vector3 GetPosition() const { return position; }
 	void SetPosition(Vector3 val) { position = val; }

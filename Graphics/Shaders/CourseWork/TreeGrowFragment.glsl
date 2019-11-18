@@ -9,7 +9,7 @@ uniform vec3 lightPos;
 uniform float lightRadius;
 
 in Vertex {
-	vec3 colour;
+	vec4 colour;
     vec2 texCoord;
     vec3 normal;
     vec3 tangent;
@@ -58,6 +58,4 @@ void main(void){
     colour += ( lightColour.rgb * sFactor ) * 0.33;
     fragColour = vec4 ( colour * atten * lambert , texture.a );
     fragColour.rgb += ( texture.rgb * lightColour.rgb ) * 0.1;
-    
-    
 }

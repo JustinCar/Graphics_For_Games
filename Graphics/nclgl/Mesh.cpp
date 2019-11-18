@@ -110,7 +110,7 @@ Mesh* Mesh::GenerateFlatTerrain()
 	int RAW_WIDTH = 1000;
 	int RAW_HEIGHT = 1000;
 
-	int VERTICES_SEPARATION = 32;
+	int VERTICES_SEPARATION = 1;
 	float TEXTURE_SEPARATION = 1.0f / 32.0f;
 
 	Mesh* m = new Mesh();

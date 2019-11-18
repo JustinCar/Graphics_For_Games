@@ -4,6 +4,7 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 textureMatrix;
+uniform mat4 shadowMatrix;
 
 uniform float time;
 uniform sampler2D heightMap;
@@ -28,12 +29,12 @@ float grow()
 {
     float height = texture(heightMap, texCoord / 32).r;
 
-    float limit = (height * 8129);
+    float limit = (height * 260);
     float pos = position.y;
 
     if (pos < limit) 
     {
-        pos += time / 10;
+        pos += time / 500;
 
         if (pos > limit) 
         {
@@ -59,9 +60,9 @@ void main ( void ) {
     vec3 newPosition = position;
     newPosition.y = grow();
 
-    OUT.worldPos = (modelMatrix * vec4(position, 1)).xyz;
+    OUT.worldPos = (modelMatrix * vec4(newPosition, 1)).xyz;
 
-    OUT.shadowProj = ( textureMatrix * vec4 ( position +( normal *1.5) ,1));
+    OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition +( normal *1.5) ,1));
     
     gl_Position = (projMatrix * viewMatrix * modelMatrix) *
         vec4(newPosition, 1.0);

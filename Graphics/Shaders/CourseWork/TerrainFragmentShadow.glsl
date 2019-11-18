@@ -60,7 +60,7 @@ void main ( void ) {
         ( texture2D ( bumpTex , IN.texCoord ).rgb * 2.0 - 1.0));
 
     vec3 incident = normalize ( lightPos - IN.worldPos );
-    float lambert = max (0.0 , dot ( incident , IN.normal ));
+    float lambert = max (0.0 , dot ( incident , normal ));
 
     float dist = length ( lightPos - IN.worldPos );
     float atten = 1.0 - clamp ( dist / lightRadius , 0.0 , 1.0);
@@ -68,8 +68,9 @@ void main ( void ) {
     vec3 viewDir = normalize ( cameraPos - IN.worldPos );
     vec3 halfDir = normalize ( incident + viewDir );
 
-    float rFactor = max (0.0 , dot ( halfDir , IN.normal ));
+    float rFactor = max (0.0 , dot ( halfDir , normal ));
     float sFactor = pow ( rFactor , 50.0 );
+    
     float shadow = 1.0;
 
     if  (IN.shadowProj.w > 0.0) {
@@ -81,5 +82,5 @@ void main ( void ) {
     vec3 colour = ( texture.rgb * lightColour.rgb );
     colour += ( lightColour.rgb * sFactor ) * 0.33;
     fragColour = vec4 ( colour * atten * lambert , texture.a );
-    fragColour.rgb += ( texture.rgb * lightColour.rgb ) * 0.1;
+    fragColour.rgb += ( texture.rgb * lightColour.rgb ) * 0.3;
 }

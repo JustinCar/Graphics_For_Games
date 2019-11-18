@@ -4,10 +4,9 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 textureMatrix;
+uniform mat4 shadowMatrix;
 
 uniform float time;
-uniform sampler2D grassMap;
-uniform vec3 treePos;
 
 in vec3 position;
 in vec4 colour;
@@ -38,10 +37,10 @@ void main(void) {
 
     OUT.normal = normalize (normalMatrix * normalize(normal));
 	gl_Position = mvp * vec4(position, 1.0);
-	OUT.texCoord = texCoord;
+	OUT.texCoord = (textureMatrix * vec4(texCoord, 0.0, 1.0)).xy;
     OUT.texCoord.y = 1 - texCoord.y;
 	OUT.colour = colour;
     OUT.worldPos = (modelMatrix * vec4(position, 1)).xyz;
 
-    OUT.shadowProj = ( textureMatrix * vec4 ( position + ( normal * 1.5), 1));
+    OUT.shadowProj = ( shadowMatrix * vec4 ( position + ( normal * 1.5), 1));
 }

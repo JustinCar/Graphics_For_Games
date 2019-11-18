@@ -13,7 +13,6 @@ c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5me
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5filedata.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5anim.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\matrix4.obj
-c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\light.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\keyboard.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\heightmap.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\gametimer.obj
@@ -21,11 +20,7 @@ c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\frust
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\cuberobot.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\camera.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\window.obj
-c:\users\b6038386\documents\github\graphics_for_games\graphics\graphics for games\debug\nclgl.lib
-c:\users\b6038386\documents\github\graphics_for_games\graphics\graphics for games\debug\nclgl.pdb
+c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\light.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.command.1.tlog
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.read.1.tlog
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.write.1.tlog
-c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\lib-link.read.1.tlog
-c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\lib-link.write.1.tlog
-c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\lib.command.1.tlog

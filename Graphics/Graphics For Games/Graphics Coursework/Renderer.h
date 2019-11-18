@@ -33,7 +33,7 @@ protected:
 	Shader* reflectShader;
 	Shader* skyboxShader;
 	Shader* treeShader;
-	Shader* shadowShader;
+	Shader* shadowShader;
 
 	OBJMesh* tree;
 	//OBJMesh* Rock1;
@@ -50,7 +50,11 @@ protected:
 	GLuint cubeMap;
 
 	GLuint shadowTex;
-	GLuint shadowFBO;
+	GLuint shadowFBO;
+
+	bool started;
+	float timeAtStart;
+
 
 	float waterRotate;
 };
