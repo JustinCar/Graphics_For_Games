@@ -8,8 +8,8 @@ uniform mat4 shadowMatrix;
 
 uniform float time;
 uniform sampler2D heightMap; // new
-uniform int xPos;
-uniform int zPos;
+uniform float xPos;
+uniform float zPos;
 
 
 in vec3 position;
@@ -26,15 +26,32 @@ out Vertex {
     vec3 binormal;
     vec3 worldPos;
     vec4 shadowProj; 
+
 } OUT;
 
 float grow() 
 {
-    float TEXTURE_SEPARATION = 1 / 32;
-    vec2 coord = vec2(xPos * TEXTURE_SEPARATION, zPos * TEXTURE_SEPARATION);
+    vec2 coord = vec2(xPos, zPos);
     float height = texture(heightMap, coord / 32).r;
 
-    return (height * 260);
+    float limit = (height * 260);
+    float pos = position.y;
+
+    if ((height * 260) > 100) 
+    {
+        return 0;
+    }
+
+    if (pos < limit) 
+    {
+        pos += time / 300;
+
+        if (pos > limit) 
+        {
+            pos = limit;
+        }
+    }
+    return height * 260;
 }
 
 void main(void) {

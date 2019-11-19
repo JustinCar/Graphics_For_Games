@@ -105,6 +105,65 @@ Mesh* Mesh::GenerateQuad() {
 	return m;
 }
 
+Mesh* Mesh::GenerateTerrain() {
+	Mesh* m = new Mesh();
+
+	m->numVertices = RAW_WIDTH * RAW_HEIGHT;
+	m->type = GL_TRIANGLE_STRIP;
+
+	m->numVertices = RAW_WIDTH * RAW_HEIGHT;
+	m->numIndices = (RAW_WIDTH - 1) * (RAW_HEIGHT - 1) * 6;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->textureCoords = new Vector2[m->numVertices];
+	m->colours = new Vector4[m->numVertices];
+	m->normals = new Vector3[m->numVertices];
+	m->tangents = new Vector3[m->numVertices];
+	m->indices = new GLuint[m->numIndices];
+
+	vector<Vector3> positionsForTrees;
+
+	int VERTICES_SEPARATION = 1;
+
+	for (int x = 0; x < RAW_WIDTH; ++x) {
+		for (int z = 0; z < RAW_HEIGHT; ++z) {
+			int offset = (x * RAW_WIDTH) + z;
+
+			m->vertices[offset] = Vector3(
+				x * VERTICES_SEPARATION, 0, z * VERTICES_SEPARATION);
+
+			m->textureCoords[offset] = Vector2(
+				x * TEXTURE_SEPARATION, z * TEXTURE_SEPARATION);
+
+		}
+	}
+
+	m->numIndices = 0;
+
+	for (int x = 0; x < RAW_WIDTH - 1; ++x) {
+		for (int z = 0; z < RAW_HEIGHT - 1; ++z) {
+			int a = (x * (RAW_WIDTH)) + z;
+			int b = ((x + 1) * (RAW_WIDTH)) + z;
+			int c = ((x + 1) * (RAW_WIDTH)) + (z + 1);
+			int d = (x * (RAW_WIDTH)) + (z + 1);
+
+			m->indices[m->numIndices++] = c;
+			m->indices[m->numIndices++] = b;
+			m->indices[m->numIndices++] = a;
+
+			m->indices[m->numIndices++] = a;
+			m->indices[m->numIndices++] = d;
+			m->indices[m->numIndices++] = c;
+		}
+	}
+
+	m->GenerateNormals();
+	m->GenerateTangents();
+	m->BufferData();
+
+	return m;
+}
+
 void Mesh::BufferData() {
 	glBindVertexArray(arrayObject);
 	glGenBuffers(1, &bufferObject[VERTEX_BUFFER]);

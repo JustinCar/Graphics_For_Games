@@ -7,6 +7,11 @@ enum MeshBuffer {
 	MAX_BUFFER
 };
 
+#define RAW_WIDTH 1000
+#define RAW_HEIGHT 1000
+
+#define TEXTURE_SEPARATION 1.0f / 32.0f
+
 class Mesh {
 public:
 	Mesh(void);
@@ -15,7 +20,7 @@ public:
 	virtual void Draw();
 	static Mesh* GenerateTriangle();
 	static Mesh* GenerateQuad();
-	static Mesh* GenerateFlatTerrain();
+	static Mesh* GenerateTerrain();
 
 	void SetTexture(GLuint tex) { texture = tex; }
 	GLuint GetTexture() { return texture; }

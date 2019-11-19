@@ -29,7 +29,7 @@ public:
 	void RemoveChild(SceneNode* s);
 
 	virtual void Update(float msec);
-	virtual void Draw(const OGLRenderer& r);
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
 
 	std::vector <SceneNode*>::const_iterator GetChildIteratorStart() {
 		return children.begin();

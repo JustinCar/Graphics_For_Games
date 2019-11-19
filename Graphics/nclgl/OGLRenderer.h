@@ -115,17 +115,21 @@ public:
 	Shader*			GetCurrentShader() const {
 		return currentShader;
 	}
-
-protected:
-	virtual void	Resize(int x, int y);	
-	void			UpdateShaderMatrices();
 	void			SetCurrentShader(Shader*s);
 
 	void			SetTextureRepeating(GLuint target, bool state);
 	void			SetShaderLight(const Light &l);
 
+	Matrix4 projMatrix;		//Projection matrix
+	Matrix4 modelMatrix;	//Model matrix. NOT MODELVIEW
+	Matrix4 viewMatrix;		//View matrix
+	Matrix4 textureMatrix;	//Texture matrix
+	Matrix4 shadowMatrix;	//Shadow matrix
 
-	//void			SetShaderLight(const Light &l);
+	void			UpdateShaderMatrices();
+protected:
+	virtual void	Resize(int x, int y);	
+	
 
 	void			DrawDebugPerspective(Matrix4*matrix = 0);
 	void			DrawDebugOrtho(Matrix4*matrix = 0);
@@ -133,11 +137,6 @@ protected:
 	Shader* currentShader;
 	
 
-	Matrix4 projMatrix;		//Projection matrix
-	Matrix4 modelMatrix;	//Model matrix. NOT MODELVIEW
-	Matrix4 viewMatrix;		//View matrix
-	Matrix4 textureMatrix;	//Texture matrix
-	Matrix4 shadowMatrix;	//Shadow matrix
 
 	int		width;			//Render area width (not quite the same as window width)
 	int		height;			//Render area height (not quite the same as window height)

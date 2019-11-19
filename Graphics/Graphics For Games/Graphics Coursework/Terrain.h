@@ -1,17 +1,16 @@
 #pragma once
 #include "../../nclgl/Mesh.h"
+#include "../../NCLGL/Camera.h"
+#include "../../NCLGL/SceneNode.h"
 
-#define RAW_WIDTH 1000
-#define RAW_HEIGHT 1000
-
-#define TEXTURE_SEPARATION 1.0f / 32.0f
-
-class Terrain : public Mesh {
+class Terrain : public SceneNode {
 public:
 	Terrain();
 	~Terrain(void) {};
 
-	GLuint GetHeightMap() { return terrainHeightMap; }
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
+
+	GLuint* GetHeightMap() { return terrainHeightMap; }
 	GLuint GetGrassMap() { return terrainGrassMap; }
 	GLuint GetStoneMap() { return terrainStoneMap; }
 	GLuint GetSnowMap() { return terrainSnowMap; }
@@ -24,8 +23,18 @@ public:
 	GLuint GetStoneBump() { return stoneBump; }
 	GLuint GetSnowBump() { return snowBump; }
 
+	void SetShader(Shader* shader) { lightShader = shader; };
+	void SetLight(Light* l) { light = l; };
+	void SetCamera(Camera* c) { camera = c; };
+	void SetHeightMap(GLuint* m) { terrainHeightMap = m; };
+
 protected:
-	GLuint terrainHeightMap;
+
+	Shader* lightShader;
+	Light* light;
+	Camera* camera;
+
+	GLuint* terrainHeightMap;
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;
 	GLuint terrainSnowMap;

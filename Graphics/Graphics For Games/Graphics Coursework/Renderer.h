@@ -9,6 +9,7 @@
 #include "../../nclgl/SceneNode.h"
 #include "Terrain.h"
 #include <stdlib.h>
+#include "Tree.h"
 
 #define SHADOWSIZE 2048
 
@@ -37,16 +38,18 @@ protected:
 	Shader* treeShader;
 	Shader* shadowShader;
 
-	OBJMesh* tree;
-	int treePositions[100][2];
-	int treeSizes[100][1];
+	int treePositions[1000][2];
+	int numTrees;
+	//int treeSizes[1000][1];
 	//OBJMesh* Rock1;
 	Mesh* quad;
-	Terrain* terrain;
+	Mesh* terrain;
 	GLuint terrainHeightMap;
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;
 	GLuint terrainSnowMap;
+
+	SceneNode* root;
 
 	Light* light;
 	Camera* camera;

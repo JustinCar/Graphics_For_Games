@@ -32,7 +32,8 @@ void SceneNode::RemoveChild(SceneNode* s)
 		children.erase(pos);
 }
 
-void SceneNode::Draw(const OGLRenderer& r) {
+void SceneNode::Draw(OGLRenderer& r, float msec, GLuint shadowTex) {
+	
 	if (mesh) { 
 		mesh->Draw();
 	}

@@ -74,10 +74,12 @@
     <ClCompile Include="Coursework.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\nclgl\nclgl.vcxproj">
