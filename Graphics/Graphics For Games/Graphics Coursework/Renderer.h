@@ -7,6 +7,8 @@
 #include "../../nclgl/MD5Node.h"
 #include "../../nclgl/OBJMesh.h"
 #include "../../nclgl/SceneNode.h"
+#include "Terrain.h"
+#include <stdlib.h>
 
 #define SHADOWSIZE 2048
 
@@ -24,7 +26,7 @@ protected:
 	void DrawTerrain(float msec);
 	void DrawLava();
 	void DrawSkybox();
-	void DrawTree(float msec);
+	void DrawTree(float msec, int index);
 
 	void DrawShadowScene(float msec);
 	void DrawCombinedScene(float msec);
@@ -36,9 +38,11 @@ protected:
 	Shader* shadowShader;
 
 	OBJMesh* tree;
+	int treePositions[100][2];
+	int treeSizes[100][1];
 	//OBJMesh* Rock1;
 	Mesh* quad;
-	Mesh* terrain;
+	Terrain* terrain;
 	GLuint terrainHeightMap;
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;

@@ -73,9 +73,11 @@
   <ItemGroup>
     <ClCompile Include="Coursework.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\nclgl\nclgl.vcxproj">

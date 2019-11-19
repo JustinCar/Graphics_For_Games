@@ -55,13 +55,11 @@ void main(void){
         shadow = textureProj (shadowTex, IN.shadowProj);
     }
 
-    lambert *= shadow; 
+    //lambert *= shadow; 
 
     vec3 c = ( diffuse.rgb * lightColour.rgb );
     c += ( lightColour.rgb * sFactor ) * 0.33;
     fragColour = vec4 (c * atten * lambert, diffuse.a);
     fragColour.rgb += (diffuse.rgb * lightColour.rgb) * 0.1;
 
-    //fragColour.rgb = texture2D ( bumpTex , IN.texCoord ).rgb;
-    //fragColour.rgb = IN.normal.rgb;
 }

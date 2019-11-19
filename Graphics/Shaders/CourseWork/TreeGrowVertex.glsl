@@ -7,6 +7,10 @@ uniform mat4 textureMatrix;
 uniform mat4 shadowMatrix;
 
 uniform float time;
+uniform sampler2D heightMap; // new
+uniform int xPos;
+uniform int zPos;
+
 
 in vec3 position;
 in vec4 colour;
@@ -24,23 +28,33 @@ out Vertex {
     vec4 shadowProj; 
 } OUT;
 
+float grow() 
+{
+    float TEXTURE_SEPARATION = 1 / 32;
+    vec2 coord = vec2(xPos * TEXTURE_SEPARATION, zPos * TEXTURE_SEPARATION);
+    float height = texture(heightMap, coord / 32).r;
+
+    return (height * 260);
+}
+
 void main(void) {
 	mat4 mvp = projMatrix * viewMatrix * modelMatrix;
     
     mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
 
-    //position.x = treePos;
+    vec3 newPosition = position;
+    newPosition.y += grow();
 
     OUT.tangent = normalize ( normalMatrix * normalize ( tangent ));
     OUT.binormal = normalize ( normalMatrix *
         normalize ( cross ( normal , tangent )));
 
     OUT.normal = normalize (normalMatrix * normalize(normal));
-	gl_Position = mvp * vec4(position, 1.0);
+	gl_Position = mvp * vec4(newPosition, 1.0);
 	OUT.texCoord = (textureMatrix * vec4(texCoord, 0.0, 1.0)).xy;
     OUT.texCoord.y = 1 - texCoord.y;
 	OUT.colour = colour;
-    OUT.worldPos = (modelMatrix * vec4(position, 1)).xyz;
+    OUT.worldPos = (modelMatrix * vec4(newPosition, 1)).xyz;
 
-    OUT.shadowProj = ( shadowMatrix * vec4 ( position + ( normal * 1.5), 1));
+    OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition + ( normal * 1.5), 1));
 }
