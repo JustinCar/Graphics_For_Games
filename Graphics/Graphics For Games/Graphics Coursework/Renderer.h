@@ -10,6 +10,7 @@
 #include "Terrain.h"
 #include <stdlib.h>
 #include "Tree.h"
+#include "Ocean.h"
 
 #define SHADOWSIZE 2048
 
@@ -62,8 +63,6 @@ protected:
 	bool started;
 	float timeAtStart;
 
-
-	float waterRotate;
 };
 
 

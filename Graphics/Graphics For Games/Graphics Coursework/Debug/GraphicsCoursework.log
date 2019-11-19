@@ -2,12 +2,16 @@
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(9,1): warning C4005:  'RAW_WIDTH': macro redefinition
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(10): message :  see previous definition of 'RAW_WIDTH'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(10,1): warning C4005:  'RAW_HEIGHT': macro redefinition
+  Ocean.cpp
   Renderer.cpp
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(11): message :  see previous definition of 'RAW_HEIGHT'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(9,1): warning C4005:  'RAW_WIDTH': macro redefinition
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Mesh.h(10): message :  see previous definition of 'RAW_WIDTH'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(10,1): warning C4005:  'RAW_HEIGHT': macro redefinition
   Terrain.cpp
-  Generating Code...
+  Tree.cpp
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Mesh.h(11): message :  see previous definition of 'RAW_HEIGHT'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Tree.cpp(76,90): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  Generating Code...
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Tree.cpp(76,66): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
   GraphicsCoursework.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\GraphicsCoursework.exe

@@ -50,8 +50,16 @@ public:
 			b -> distanceFromCamera) ? true : false;
 	}
 
+	void setCastShadows() { castShadows = true; };
+	bool getCastShadows() { return castShadows; };
+
+	void setRecieveShadows() { recieveShadows = true; };
+	bool getRecieveShadows() { return recieveShadows; };
 
 protected:
+
+	bool castShadows;
+	bool recieveShadows;
 	SceneNode* parent;
 	Mesh* mesh;
 	Matrix4 worldTransform;

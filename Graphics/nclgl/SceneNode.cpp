@@ -7,6 +7,8 @@ SceneNode::SceneNode(Mesh* mesh, Vector4 colour) {
 	modelScale = Vector3(1, 1, 1);
 	boundingRadius = 1.0f;
 	distanceFromCamera = 0.0f;
+	castShadows = false;
+	recieveShadows = false;
 
 }
 

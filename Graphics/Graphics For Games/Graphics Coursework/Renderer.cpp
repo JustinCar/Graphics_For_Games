@@ -2,11 +2,20 @@
 
 Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	camera = new Camera();
-	quad = Mesh::GenerateQuad();
+	//quad = Mesh::GenerateQuad();
 	terrain = Mesh::GenerateTerrain();
 	root = new SceneNode();
 
-	Terrain* terrainNode = new Terrain();	terrainNode->SetMesh(terrain);	root->AddChild(terrainNode);	Tree* treeNode = new Tree();	root->AddChild(treeNode);
+	Terrain* terrainNode = new Terrain();
+	terrainNode->SetMesh(terrain);
+	root->AddChild(terrainNode);
+
+	Tree* treeNode = new Tree();
+	root->AddChild(treeNode);
+
+	Ocean* oceanNode = new Ocean();
+	root->AddChild(oceanNode);
+
 	started = false;
 	timeAtStart = 0.0f;
 
@@ -33,6 +42,13 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapVSmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 
+	cubeMap = SOIL_load_OGL_cubemap(
+		TEXTUREDIR "Coursework/Left_Space.png", TEXTUREDIR "Coursework/Right_Space.png",
+		TEXTUREDIR "Coursework/Up_Space.png", TEXTUREDIR "Coursework/Down_Space.png",
+		TEXTUREDIR "Coursework/Front_Space.png", TEXTUREDIR "Coursework/Back_Space.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID, 0
+	);
 	
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
@@ -44,43 +60,25 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	terrainNode->SetCamera(camera);
 	terrainNode->SetShader(lightShader);
 	terrainNode->SetHeightMap(&terrainHeightMap);
+	terrainNode->setCastShadows();
+	terrainNode->setRecieveShadows();
 
 	treeNode->SetLight(light);
 	treeNode->SetCamera(camera);
 	treeNode->SetShader(treeShader);
 	treeNode->SetHeightMap(&terrainHeightMap);
+	treeNode->setCastShadows();
+	treeNode->setRecieveShadows();
 
-	/*tree->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/Forest/bark01_bottom.tga",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-	tree->GenerateNormals();
+	oceanNode->SetLight(light);
+	oceanNode->SetCamera(camera);
+	oceanNode->SetShader(reflectShader);
+	oceanNode->setRecieveShadows();
+	oceanNode->SetCubeMap(&cubeMap);
 
-	std::vector<Mesh*> treeChildren = tree->getChildren();
-	treeChildren[0]->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/Forest/tree_branches.png",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-	treeChildren[0]->GenerateNormals();
-
-	tree->SetBumpMap(SOIL_load_OGL_texture(
-		TEXTUREDIR "Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-
-	treeChildren[0]->SetBumpMap(SOIL_load_OGL_texture(
-		TEXTUREDIR "Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));*/
-
-	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
-		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-
-	cubeMap = SOIL_load_OGL_cubemap(
-		TEXTUREDIR "Coursework/Left_Space.png", TEXTUREDIR "Coursework/Right_Space.png",
-		TEXTUREDIR "Coursework/Up_Space.png", TEXTUREDIR "Coursework/Down_Space.png",
-		TEXTUREDIR "Coursework/Front_Space.png", TEXTUREDIR "Coursework/Back_Space.png",
-		SOIL_LOAD_RGB,
-		SOIL_CREATE_NEW_ID, 0
-	);
-
-	if (!cubeMap || !quad->GetTexture()) {
+	/*if (!cubeMap || !quad->GetTexture()) {
 		return;
-	}
+	}*/
 
 	std::vector<Mesh*> treeChildren = treeNode->GetOBJ()->getChildren();
 
@@ -91,7 +89,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	SetTextureRepeating(treeChildren.at(0)->GetTexture(), true);
 	SetTextureRepeating(treeChildren.at(0)->GetBumpMap(), true);
 
-	SetTextureRepeating(quad->GetTexture(), true);
+	SetTextureRepeating(oceanNode->GetMesh()->GetTexture(), true);
 	SetTextureRepeating(terrainNode->GetStone(), true);
 	SetTextureRepeating(terrainNode->GetGrass(), true);
 	SetTextureRepeating(terrainNode->GetSnow(), true);
@@ -144,7 +142,7 @@ Renderer ::~Renderer(void) {
 	delete camera;
 	delete terrain;
 	//delete tree;
-	delete quad;
+	//delete quad;
 	delete reflectShader;
 	delete skyboxShader;
 	delete lightShader;
@@ -201,7 +199,7 @@ void Renderer::UpdateScene(float msec) {
 void Renderer::RenderScene(float msec) {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	DrawSkybox();
+	//DrawSkybox();
 
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN) && !started) {
 		timeAtStart = msec;
@@ -216,7 +214,7 @@ void Renderer::RenderScene(float msec) {
 		DrawCombinedScene(time); // Second render pass ...
 	}
 	
-	DrawLava();
+	//DrawLava();
 
 	SwapBuffers();
 }
@@ -242,16 +240,15 @@ void Renderer::DrawShadowScene(float msec) {
 
 	UpdateShaderMatrices();
 
-	/*for (int i = 0; i < numTrees; i++)
-	{
-		DrawTree(msec, i);
-	}*/
-
 	for (vector < SceneNode* >::const_iterator i =
 		root -> GetChildIteratorStart();
 		i != root -> GetChildIteratorEnd(); ++i) {
-		(*i)->Draw(*this, msec, shadowTex);	}
-	//DrawTerrain(msec);
+		if (!(*i)->getCastShadows())
+		{
+			continue;
+		}
+		(*i)->Draw(*this, msec, shadowTex);
+	}
 
 	glUseProgram(0);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -279,116 +276,58 @@ void Renderer::DrawCombinedScene(float msec) {
 		viewMatrix = camera->BuildViewMatrix();
 	}
 
-	/*for (int i = 0; i < numTrees; i++)
-	{
-		DrawTree(msec, i);
-	}*/
 	for (vector < SceneNode* >::const_iterator i =
 		root->GetChildIteratorStart();
 		i != root->GetChildIteratorEnd(); ++i) {
-		(*i)->Draw(*this, msec, shadowTex);	}
-	//DrawTerrain(msec);
+		(*i)->Draw(*this, msec, shadowTex);
+	}
 
 	glUseProgram(0);
 }
 
-//void Renderer::DrawTree(float msec, int index)
-//{
-//	SetCurrentShader(treeShader);
+//void Renderer::DrawSkybox() {
+//	glDepthMask(GL_FALSE);
+//	SetCurrentShader(skyboxShader);
+//
+//	UpdateShaderMatrices();
+//	quad->Draw();
+//
+//	glUseProgram(0);
+//	glDepthMask(GL_TRUE);
+//}
+
+//void Renderer::DrawLava() {
+//	SetCurrentShader(reflectShader);
 //	SetShaderLight(*light);
-//
-//	modelMatrix.ToIdentity();
-//	textureMatrix.ToIdentity();
-//
 //	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
 //		"cameraPos"), 1, (float*)& camera->GetPosition());
 //
-//	glUniform1i(glGetUniformLocation(currentShader -> GetProgram(),
+//	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
 //		"diffuseTex"), 0);
 //
-//	glActiveTexture(GL_TEXTURE1);
-//	glBindTexture(GL_TEXTURE_2D, tree->GetBumpMap());
 //	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-//			"bumpTex"), 1);
+//		"cubeTex"), 2);
 //
 //	glActiveTexture(GL_TEXTURE2);
-//	glBindTexture(GL_TEXTURE_2D, terrainHeightMap);
-//	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "heightMap"), 2);
+//	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
 //
-//	glActiveTexture(GL_TEXTURE11);
-//	glBindTexture(GL_TEXTURE_2D, shadowTex);
-//	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-//		"shadowTex"), 11);
-//	
+//	float heightX = (1000 / 2.0f);
 //
-//	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
-//		"time"), msec);
+//	float heightY = 50;
 //
-//	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
-//		"xPos"), treePositions[index][0] * TEXTURE_SEPARATION);
+//	float heightZ = (1000 / 2.0f);
 //
-//	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
-//		"zPos"), treePositions[index][1] * TEXTURE_SEPARATION);
+//	modelMatrix =
+//		Matrix4::Translation(Vector3(heightX, heightY, heightZ)) *
+//		Matrix4::Scale(Vector3(heightX * 2, 1, heightZ * 2)) *
+//		Matrix4::Rotation(90, Vector3(1.0f, 0.0f, 0.0f));
 //
-//
-//	modelMatrix = Matrix4::Translation(Vector3(treePositions[index][0], 0, treePositions[index][1])) * Matrix4::Scale(Vector3(1, 1, 1));
-//
-//	Matrix4 tempMatrix = shadowMatrix * modelMatrix;
-//
-//	glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram()
-//		,"shadowMatrix"), 1, false, *&tempMatrix.values);
-//
+//	textureMatrix = Matrix4::Scale(Vector3(50.0f, 50.0f, 50.0f)) *
+//		Matrix4::Rotation(waterRotate, Vector3(0.0f, 0.0f, 1.0f));
 //
 //	UpdateShaderMatrices();
-//	
-//	tree->Draw();
+//
+//	quad->Draw();
 //
 //	glUseProgram(0);
 //}
-
-void Renderer::DrawSkybox() {
-	glDepthMask(GL_FALSE);
-	SetCurrentShader(skyboxShader);
-
-	UpdateShaderMatrices();
-	quad->Draw();
-
-	glUseProgram(0);
-	glDepthMask(GL_TRUE);
-}
-
-void Renderer::DrawLava() {
-	SetCurrentShader(reflectShader);
-	SetShaderLight(*light);
-	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
-		"cameraPos"), 1, (float*)& camera->GetPosition());
-
-	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"diffuseTex"), 0);
-
-	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"cubeTex"), 2);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
-
-	float heightX = (1000 / 2.0f);
-
-	float heightY = 50;
-
-	float heightZ = (1000 / 2.0f);
-
-	modelMatrix =
-		Matrix4::Translation(Vector3(heightX, heightY, heightZ)) *
-		Matrix4::Scale(Vector3(heightX * 2, 1, heightZ * 2)) *
-		Matrix4::Rotation(90, Vector3(1.0f, 0.0f, 0.0f));
-
-	textureMatrix = Matrix4::Scale(Vector3(50.0f, 50.0f, 50.0f)) *
-		Matrix4::Rotation(waterRotate, Vector3(0.0f, 0.0f, 1.0f));
-
-	UpdateShaderMatrices();
-
-	quad->Draw();
-
-	glUseProgram(0);
-}

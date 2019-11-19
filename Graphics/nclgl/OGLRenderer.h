@@ -127,9 +127,12 @@ public:
 	Matrix4 shadowMatrix;	//Shadow matrix
 
 	void			UpdateShaderMatrices();
+
+	float getWaterRotate() { return waterRotate; };
 protected:
 	virtual void	Resize(int x, int y);	
 	
+	float waterRotate;
 
 	void			DrawDebugPerspective(Matrix4*matrix = 0);
 	void			DrawDebugOrtho(Matrix4*matrix = 0);

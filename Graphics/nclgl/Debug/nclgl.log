@@ -1,5 +1,19 @@
-﻿  Mesh.cpp
+﻿  Camera.cpp
+  CubeRobot.cpp
+  Frustum.cpp
+  HeightMap.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\HeightMap.h(9,1): warning C4005:  'RAW_WIDTH': macro redefinition
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(10): message :  see previous definition of 'RAW_WIDTH'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\HeightMap.h(10,1): warning C4005:  'RAW_HEIGHT': macro redefinition
+  MD5Anim.cpp
+  MD5FileData.cpp
+  MD5Mesh.cpp
+  MD5Node.cpp
+  Mesh.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(11): message :  see previous definition of 'RAW_HEIGHT'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(133,35): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  OBJMesh.cpp
+  OGLRenderer.cpp
   SceneNode.cpp
   Shader.cpp
   Window.cpp
