@@ -29,7 +29,7 @@ public:
 	void RemoveChild(SceneNode* s);
 
 	virtual void Update(float msec);
-	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount);
 
 	std::vector <SceneNode*>::const_iterator GetChildIteratorStart() {
 		return children.begin();
@@ -60,6 +60,8 @@ protected:
 
 	bool castShadows;
 	bool recieveShadows;
+
+
 	SceneNode* parent;
 	Mesh* mesh;
 	Matrix4 worldTransform;

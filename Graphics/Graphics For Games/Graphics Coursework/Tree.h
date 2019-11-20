@@ -9,7 +9,7 @@ public:
 	Tree();
 	~Tree(void) {};
 
-	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount);
 
 	void SetShader(Shader* s) { shader = s; };
 	void SetLight(Light* l) { light = l; };
@@ -30,5 +30,6 @@ protected:
 	GLuint* terrainHeightMap;
 
 	int treePositions[1000][2];
+	int treeRotations[1000][1];
 	int numTrees;
 };

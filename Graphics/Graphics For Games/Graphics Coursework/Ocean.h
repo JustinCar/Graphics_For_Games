@@ -9,7 +9,7 @@ public:
 	Ocean();
 	~Ocean(void) {};
 
-	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount);
 
 	void SetShader(Shader* s) { shader = s; };
 	void SetLight(Light* l) { light = l; };

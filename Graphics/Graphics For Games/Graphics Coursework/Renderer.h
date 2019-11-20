@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include "Tree.h"
 #include "Ocean.h"
+#include "SkyBox.h"
 
 #define SHADOWSIZE 2048
 
@@ -49,6 +50,8 @@ protected:
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;
 	GLuint terrainSnowMap;
+
+	int  drawCount;
 
 	SceneNode* root;
 

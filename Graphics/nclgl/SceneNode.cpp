@@ -9,7 +9,6 @@ SceneNode::SceneNode(Mesh* mesh, Vector4 colour) {
 	distanceFromCamera = 0.0f;
 	castShadows = false;
 	recieveShadows = false;
-
 }
 
 SceneNode ::~SceneNode(void) {
@@ -34,7 +33,7 @@ void SceneNode::RemoveChild(SceneNode* s)
 		children.erase(pos);
 }
 
-void SceneNode::Draw(OGLRenderer& r, float msec, GLuint shadowTex) {
+void SceneNode::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) {
 	
 	if (mesh) { 
 		mesh->Draw();

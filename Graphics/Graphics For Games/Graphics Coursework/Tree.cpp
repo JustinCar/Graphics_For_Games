@@ -13,6 +13,7 @@ Tree::Tree()
 	{
 		treePositions[i][0] = rand() % 800 + 100;
 		treePositions[i][1] = rand() % 800 + 100;
+		treeRotations[i][0] = rand() % 360 + 1;
 	}
 
 	tree->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/Forest/bark01_bottom.tga",
@@ -33,8 +34,10 @@ Tree::Tree()
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 }
 
-void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex) 
+void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
+	if (drawCount < 2)
+		return;
 
 	for (int i = 0; i < numTrees; i++)
 	{
@@ -73,7 +76,8 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex)
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"zPos"), treePositions[i][1] * TEXTURE_SEPARATION);
 
-		r.modelMatrix = Matrix4::Translation(Vector3(treePositions[i][0], 0, treePositions[i][1])) * Matrix4::Scale(Vector3(1, 1, 1));
+		r.modelMatrix = Matrix4::Translation(Vector3(treePositions[i][0], 0, treePositions[i][1])) * Matrix4::Scale(Vector3(1, 1, 1))
+			* Matrix4::Rotation(treeRotations[i][0], Vector3(0.0f, 1.0f, 0.0f));;
 
 		Matrix4 tempMatrix = r.shadowMatrix * r.modelMatrix;
 

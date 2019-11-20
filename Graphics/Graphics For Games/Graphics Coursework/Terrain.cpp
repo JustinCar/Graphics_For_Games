@@ -46,7 +46,11 @@ Terrain::Terrain()
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 }
 
-void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex) {
+void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) {
+
+	if (drawCount < 1)
+		return;
+
 	r.SetCurrentShader(lightShader);
 	r.SetShaderLight(*light);
 

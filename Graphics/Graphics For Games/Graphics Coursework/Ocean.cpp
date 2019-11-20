@@ -7,11 +7,11 @@ Ocean::Ocean()
 	shader = 0;
 
 	mesh = Mesh::GenerateQuad();
-	mesh->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/lava.png",
+	mesh->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/water.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 }
 
-void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex)
+void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
 	r.SetCurrentShader(shader);
 	r.SetShaderLight(*light);
@@ -29,7 +29,7 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex)
 
 	float heightX = (1000 / 2.0f);
 
-	float heightY = 50;
+	float heightY = 60;
 
 	float heightZ = (1000 / 2.0f);
 

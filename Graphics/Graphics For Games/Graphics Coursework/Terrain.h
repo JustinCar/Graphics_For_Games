@@ -8,7 +8,7 @@ public:
 	Terrain();
 	~Terrain(void) {};
 
-	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex);
+	virtual void Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount);
 
 	GLuint* GetHeightMap() { return terrainHeightMap; }
 	GLuint GetGrassMap() { return terrainGrassMap; }
