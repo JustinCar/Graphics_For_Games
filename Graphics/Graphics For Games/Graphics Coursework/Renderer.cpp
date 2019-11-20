@@ -21,7 +21,8 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	Ocean* oceanNode = new Ocean();
 	root->AddChild(oceanNode);
 
-	
+	Rain* rainNode = new Rain();
+	root->AddChild(rainNode);
 
 	started = false;
 	timeAtStart = 0.0f;
@@ -50,6 +51,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		SHADERDIR "CourseWork/TreeGrowFragment.glsl");
 	shadowShader = new Shader(SHADERDIR "shadowVert.glsl",
 		SHADERDIR "shadowFrag.glsl");
+	rainShader = new Shader(SHADERDIR "CourseWork/RainVertex.glsl",
+		SHADERDIR "CourseWork/RainFragment.glsl",
+		SHADERDIR "CourseWork/RainGeom.glsl");
 
 	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapVSmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
@@ -65,7 +69,8 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()
+		|| !rainShader->LinkProgram()) {
 		return;
 	}
 
@@ -91,6 +96,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 
 	skyBoxNode->SetShader(skyboxShader);
 	skyBoxNode->SetCubeMap(&cubeMap);
+
+	rainNode->SetShader(rainShader);
+	rainNode->SetLight(light);
 
 	if (!cubeMap) {
 		return;
@@ -177,10 +185,14 @@ void Renderer::reloadShaders()
 		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
 	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
 		SHADERDIR "CourseWork/TreeGrowFragment.glsl");
+	rainShader = new Shader(SHADERDIR "CourseWork/RainVertex.glsl",
+		SHADERDIR "CourseWork/RainFragment.glsl",
+		SHADERDIR "CourseWork/RainGeom.glsl");
 
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram() || !treeShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()
+		|| !rainShader->LinkProgram()) {
 		return;
 	}
 }
@@ -216,7 +228,6 @@ void Renderer::RenderScene(float msec) {
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_P)) {
 		cout << camera->GetPosition() << std::endl;
 	}
-
 
 
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN) && !started) {

@@ -10,7 +10,6 @@ Shader::Shader(string vFile, string fFile, string gFile) {
 		objects[SHADER_GEOMETRY] = GenerateShader(gFile,
 			GL_GEOMETRY_SHADER);
 		glAttachShader(program, objects[SHADER_GEOMETRY]);
-		
 	}
 	glAttachShader(program, objects[SHADER_VERTEX]);
 	glAttachShader(program, objects[SHADER_FRAGMENT]);

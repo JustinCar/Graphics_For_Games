@@ -72,6 +72,27 @@ Mesh* Mesh::GenerateTriangle() {
 
 }
 
+Mesh* Mesh::GeneratePoints(int count) {
+	Mesh* m = new Mesh();
+
+	m->numVertices = count;
+	m->type = GL_POINTS;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->textureCoords = new Vector2[m->numVertices];
+	m->colours = new Vector4[m->numVertices];
+
+	for (int i = 0; i < count; ++i) {
+		m->vertices[i] = Vector3(rand() % 800 + 100, 500.0f, rand() % 800 + 100);
+		m->colours[i] = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		m->textureCoords[i] = Vector2(0.0f, 0.0f);
+	}
+
+	m->BufferData();
+
+	return m;
+}
+
 Mesh* Mesh::GenerateQuad() {
 	Mesh* m = new Mesh();
 

@@ -12,6 +12,7 @@
 #include "Tree.h"
 #include "Ocean.h"
 #include "SkyBox.h"
+#include "Rain.h"
 
 #define SHADOWSIZE 2048
 
@@ -26,10 +27,6 @@ public:
 	void reloadShaders();
 
 protected:
-	void DrawTerrain(float msec);
-	void DrawLava();
-	void DrawSkybox();
-	void DrawTree(float msec, int index);
 
 	void DrawShadowScene(float msec);
 	void DrawCombinedScene(float msec);
@@ -39,11 +36,10 @@ protected:
 	Shader* skyboxShader;
 	Shader* treeShader;
 	Shader* shadowShader;
+	Shader* rainShader;
 
 	int treePositions[1000][2];
 	int numTrees;
-	//int treeSizes[1000][1];
-	//OBJMesh* Rock1;
 	Mesh* quad;
 	Mesh* terrain;
 	GLuint terrainHeightMap;
@@ -65,7 +61,6 @@ protected:
 
 	bool started;
 	float timeAtStart;
-
 };
 
 
