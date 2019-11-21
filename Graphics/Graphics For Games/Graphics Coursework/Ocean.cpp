@@ -5,6 +5,7 @@ Ocean::Ocean()
 	camera = 0;
 	light = 0;
 	shader = 0;
+	isFoggy = false;
 
 	mesh = Mesh::GenerateQuad();
 	mesh->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/water.png",
@@ -13,8 +14,7 @@ Ocean::Ocean()
 
 void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
-	bool isFoggy = false;
-	if (drawCount > 1)
+	if (drawCount > 2)
 		isFoggy = true;
 
 	r.SetCurrentShader(shader);

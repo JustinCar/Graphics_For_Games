@@ -27,6 +27,8 @@ protected:
 	Light* light;
 	Camera* camera;
 
+	bool fog;
+
 	GLuint* terrainHeightMap;
 
 	int treePositions[1000][2];

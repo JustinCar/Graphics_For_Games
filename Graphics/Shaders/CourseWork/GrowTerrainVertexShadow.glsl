@@ -36,9 +36,14 @@ float grow()
     float limit = (height * 260);
     float pos = position.y;
 
+    if () 
+    {
+        
+    }
+
     if (pos < limit) 
     {
-        pos += time / 300;
+        pos += time / 50;
 
         if (pos > limit) 
         {

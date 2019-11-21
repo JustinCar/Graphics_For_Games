@@ -13,7 +13,7 @@ Rain::Rain()
 
 void Rain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
-	if (drawCount <= 1)
+	if (drawCount <= 2)
 		return;
 
 	r.SetCurrentShader(shader);

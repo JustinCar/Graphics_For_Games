@@ -34,6 +34,8 @@ protected:
 	Light* light;
 	Camera* camera;
 
+	bool fog;
+
 	GLuint* terrainHeightMap;
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;

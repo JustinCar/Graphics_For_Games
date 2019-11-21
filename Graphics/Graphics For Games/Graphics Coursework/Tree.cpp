@@ -4,6 +4,7 @@ Tree::Tree()
 	camera = 0;
 	light = 0;
 	shader = 0;
+	fog = false;
 
 	numTrees = 1000;
 	tree = new OBJMesh(MESHDIR "CourseWork/TreeHD.obj");
@@ -34,14 +35,17 @@ Tree::Tree()
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 }
 
+
 void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
-	if (drawCount < 2)
+	if (drawCount < 1)
 		return;
+	else if (elapsedTime == 0)
+	{
+		elapsedTime = msec;
+	}
 
-	bool fog = false;
-
-	if (drawCount > 2)
+	if (drawCount > 3)
 		fog = true;
 
 	for (int i = 0; i < numTrees; i++)
@@ -73,7 +77,7 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 			"shadowTex"), 11);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-			"time"), msec);
+			"time"), msec - elapsedTime);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"isFoggy"), fog);

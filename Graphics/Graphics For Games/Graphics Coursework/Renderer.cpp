@@ -243,13 +243,24 @@ void Renderer::RenderScene(float msec) {
 	elapsedTime += msec;
 
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
-		drawCount++;
+		drawCount = 1;
 	}
 
+	float seconds = msec / 1000;
+
+	drawCount = 1;
+
+	if (seconds > 40) 
+		drawCount = 2;
+
+	if (seconds > 50)
+		drawCount = 3;
+
+	if (seconds > 55)
+		drawCount = 4;
 
 	DrawShadowScene(msec); // First render pass ...
 	DrawCombinedScene(msec); // Second render pass ...
-
 
 	SwapBuffers();
 }

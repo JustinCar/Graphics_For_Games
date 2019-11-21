@@ -19,6 +19,8 @@ public:
 
 protected:
 
+	bool isFoggy;
+
 	GLuint* cubeMap;
 	GLuint* cubeMapFog;
 

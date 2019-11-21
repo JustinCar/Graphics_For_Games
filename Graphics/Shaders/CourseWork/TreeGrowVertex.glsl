@@ -36,7 +36,7 @@ float grow()
     vec2 coord = vec2(xPos, zPos);
     float height = texture(heightMap, coord / 32).r;
 
-    float limit = (height * 260);
+    float limit = height * 260;
     float pos = position.y;
 
     if ((height * 260) > 100) 
@@ -46,14 +46,14 @@ float grow()
 
     if (pos < limit) 
     {
-        pos += time / 300;
+        pos += time / 500;
 
         if (pos > limit) 
         {
             pos = limit;
         }
     }
-    return height * 260;
+    return pos;
 }
 
 void main(void) {
