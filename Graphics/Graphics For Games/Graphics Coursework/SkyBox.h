@@ -15,10 +15,15 @@ public:
 	void SetLight(Light* l) { light = l; };
 	void SetCamera(Camera* c) { camera = c; };
 	void SetCubeMap(GLuint* c) { cubeMap = c; };
+	void SetCubeMapFog(GLuint* c) { cubeMapFog = c; };
 
 protected:
 
 	GLuint* cubeMap;
+	GLuint* cubeMapFog;
+
+	float timeAtBlend;
+	bool blendBoxes;
 
 	Shader* shader;
 	Light* light;

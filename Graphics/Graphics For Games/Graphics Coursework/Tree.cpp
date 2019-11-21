@@ -39,6 +39,11 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 	if (drawCount < 2)
 		return;
 
+	bool fog = false;
+
+	if (drawCount > 2)
+		fog = true;
+
 	for (int i = 0; i < numTrees; i++)
 	{
 		r.SetCurrentShader(shader);
@@ -69,6 +74,9 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"time"), msec);
+
+		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"isFoggy"), fog);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"xPos"), treePositions[i][0] * TEXTURE_SEPARATION);

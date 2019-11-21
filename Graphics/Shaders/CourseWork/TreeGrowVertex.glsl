@@ -11,7 +11,6 @@ uniform sampler2D heightMap; // new
 uniform float xPos;
 uniform float zPos;
 
-
 in vec3 position;
 in vec4 colour;
 in vec3 normal;
@@ -26,8 +25,11 @@ out Vertex {
     vec3 binormal;
     vec3 worldPos;
     vec4 shadowProj; 
-
+    float visibility;
 } OUT;
+
+const float density = 0.003;
+const float gradient = 1.5;
 
 float grow() 
 {
@@ -72,6 +74,13 @@ void main(void) {
     OUT.texCoord.y = 1 - texCoord.y;
 	OUT.colour = colour;
     OUT.worldPos = (modelMatrix * vec4(newPosition, 1)).xyz;
+
+    //fog --------------------------------------------------
+    vec4 toCam = viewMatrix * vec4(OUT.worldPos, 1.0);
+    float dis = length(toCam.xyz);
+    OUT.visibility = exp(-pow((dis * density), gradient));
+    OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
+    //--------------------------------------------------
 
     OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition + ( normal * 1.5), 1));
 }

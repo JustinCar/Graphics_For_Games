@@ -2,49 +2,44 @@
 
 Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	camera = new Camera();
-	//quad = Mesh::GenerateQuad();
 	terrain = Mesh::GenerateTerrain();
 	root = new SceneNode();
 
 	drawCount = 0;
 
-	SkyBox* skyBoxNode = new SkyBox();
+	skyBoxNode = new SkyBox();
 	root->AddChild(skyBoxNode);
 
-	Terrain* terrainNode = new Terrain();
+	terrainNode = new Terrain();
 	terrainNode->SetMesh(terrain);
 	root->AddChild(terrainNode);
 
-	Tree* treeNode = new Tree();
+	treeNode = new Tree();
 	root->AddChild(treeNode);
 
-	Ocean* oceanNode = new Ocean();
+	oceanNode = new Ocean();
 	root->AddChild(oceanNode);
 
-	Rain* rainNode = new Rain();
+	rainNode = new Rain();
 	root->AddChild(rainNode);
 
 	started = false;
-	timeAtStart = 0.0f;
+	elapsedTime = 0.0f;
 
 	camera->SetPosition(Vector3(100 * 10,
 		100.0f, 100 * 10));
-
-	/*light = new Light(Vector3((1190),
-		500.0f, 1250),
-		Vector4(1.0f, 1.0f, 1.0f, 1),
-		(1000 * 500));*/
 
 	light = new Light(Vector3(550,
 		500.0f, 2670),
 		Vector4(1.0f, 1.0f, 1.0f, 1),
 		(1000 * 500));
 
-
-	reflectShader = new Shader(SHADERDIR "PerPixelVertex.glsl",
-		SHADERDIR "reflectFragment.glsl");
-	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
-		SHADERDIR "skyboxFragment.glsl");
+	/*reflectShader = new Shader(SHADERDIR "PerPixelVertex.glsl",
+		SHADERDIR "reflectFragment.glsl");*/
+	reflectShader = new Shader(SHADERDIR "CourseWork/WaterVertex.glsl",
+		SHADERDIR "CourseWork/WaterFragment.glsl");
+	skyboxShader = new Shader(SHADERDIR"CourseWork/skyboxVertex.glsl",
+		SHADERDIR "CourseWork/skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertexShadow.glsl",
 		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
 	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
@@ -63,6 +58,14 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		TEXTUREDIR "Coursework/Skybox/Left.png", TEXTUREDIR "Coursework/Skybox/Right.png",
 		TEXTUREDIR "Coursework/Skybox/Up.png", TEXTUREDIR "Coursework/Skybox/Down.png",
 		TEXTUREDIR "Coursework/Skybox/Front.png", TEXTUREDIR "Coursework/Skybox/Back.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID, 0
+	);
+
+	cubeMapFog = SOIL_load_OGL_cubemap(
+		TEXTUREDIR "Coursework/Skybox/FoggySky/Left.png", TEXTUREDIR "Coursework/Skybox/FoggySky/Right.png",
+		TEXTUREDIR "Coursework/Skybox/FoggySky/Up.png", TEXTUREDIR "Coursework/Skybox/FoggySky/Down.png",
+		TEXTUREDIR "Coursework/Skybox/FoggySky/Front.png", TEXTUREDIR "Coursework/Skybox/FoggySky/Back.png",
 		SOIL_LOAD_RGB,
 		SOIL_CREATE_NEW_ID, 0
 	);
@@ -93,9 +96,11 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	oceanNode->SetShader(reflectShader);
 	oceanNode->setRecieveShadows();
 	oceanNode->SetCubeMap(&cubeMap);
+	oceanNode->SetCubeMapFog(&cubeMapFog);
 
 	skyBoxNode->SetShader(skyboxShader);
 	skyBoxNode->SetCubeMap(&cubeMap);
+	skyBoxNode->SetCubeMapFog(&cubeMapFog);
 
 	rainNode->SetShader(rainShader);
 	rainNode->SetLight(light);
@@ -149,7 +154,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	init = true;
 	waterRotate = 0.0f;
 
-	projMatrix = Matrix4::Perspective(1.0f, 4000.0f,
+	projMatrix = Matrix4::Perspective(10.0f, 4000.0f,
 		(float)width / (float)height, 45.0f);
 
 	glEnable(GL_DEPTH_TEST);
@@ -177,10 +182,10 @@ Renderer ::~Renderer(void) {
 void Renderer::reloadShaders() 
 {
 
-	reflectShader = new Shader(SHADERDIR "PerPixelVertex.glsl",
-		SHADERDIR "reflectFragment.glsl");
-	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
-		SHADERDIR "skyboxFragment.glsl");
+	reflectShader = new Shader(SHADERDIR "CourseWork/WaterVertex.glsl",
+		SHADERDIR "CourseWork/WaterFragment.glsl");
+	skyboxShader = new Shader(SHADERDIR"CourseWork/skyboxVertex.glsl",
+		SHADERDIR "CourseWork/skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"CourseWork/GrowTerrainVertexShadow.glsl",
 		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
 	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
@@ -195,6 +200,12 @@ void Renderer::reloadShaders()
 		|| !rainShader->LinkProgram()) {
 		return;
 	}
+
+	terrainNode->SetShader(lightShader);
+	treeNode->SetShader(treeShader);
+	oceanNode->SetShader(reflectShader);
+	skyBoxNode->SetShader(skyboxShader);
+	rainNode->SetShader(rainShader);
 }
 
 void Renderer::UpdateScene(float msec) {
@@ -229,17 +240,15 @@ void Renderer::RenderScene(float msec) {
 		cout << camera->GetPosition() << std::endl;
 	}
 
+	elapsedTime += msec;
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN) && !started) {
-		timeAtStart = msec;
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
 		drawCount++;
 	}
 
-	float time = msec - timeAtStart;
 
-
-	DrawShadowScene(time); // First render pass ...
-	DrawCombinedScene(time); // Second render pass ...
+	DrawShadowScene(msec); // First render pass ...
+	DrawCombinedScene(msec); // Second render pass ...
 
 
 	SwapBuffers();

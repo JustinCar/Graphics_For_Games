@@ -17,11 +17,17 @@ out Vertex {
 } OUT;
 
 void main(void) {
-	mat4 mvp = projMatrix * viewMatrix * modelMatrix;
+	//mat4 mvp = projMatrix * viewMatrix * modelMatrix;
 
     vec3 pos = position;
+	float start = pos.y;
 
-    pos.y -= time / 100;
+    pos.y -= time / 5;
+
+	while(pos.y < 0) 
+	{
+		pos.y += start;
+	}
 
 	gl_Position = vec4(pos, 1.0);
 	OUT.texCoord = (textureMatrix * vec4(texCoord, 0.0, 1.0)).xy;

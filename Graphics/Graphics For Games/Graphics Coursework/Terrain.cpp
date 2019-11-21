@@ -51,6 +51,11 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 	if (drawCount < 1)
 		return;
 
+	bool fog = false;
+
+	if (drawCount > 2)
+		fog = true;
+
 	r.SetCurrentShader(lightShader);
 	r.SetShaderLight(*light);
 
@@ -96,6 +101,9 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"time"), msec);
+
+	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"isFoggy"), fog);
 
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, *terrainHeightMap);

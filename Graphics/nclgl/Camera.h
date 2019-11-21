@@ -23,7 +23,7 @@ public:
 		yaw		= 0.0f;
 		pitch	= 0.0f;
 		roll = 0.0f;
-		xSpeed = 1.0f;
+		xSpeed = 0.06f;
 		ySpeed = 0.06f;
 
 		look = Vector3(506.605, 116.561, 560.64);
@@ -59,8 +59,8 @@ public:
 		this->yaw		= yaw;
 		this->roll = roll;
 		this->position	= position;
-		xSpeed = 0.1f;
-		ySpeed = 0.1f;
+		xSpeed = 0.06f;
+		ySpeed = 0.06f;
 	}
 
 	~Camera(void){};

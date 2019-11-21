@@ -4,10 +4,10 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 
-uniform float particleSize = 0.5f;
+uniform float particleSize = 0.5;
 
 layout (points) in;
-layout (triangle_strip, max_vertices = 4) out;
+layout (triangle_strip, max_vertices = 8) out;
 
 in Vertex {
     vec2 texCoord;
@@ -47,6 +47,39 @@ void main () {
         // bottom Left
         gl_Position = gl_in[i].gl_Position;
         gl_Position.x -= particleSize;
+        gl_Position.y -= particleSize;
+        gl_Position = projMatrix * viewMatrix * (modelMatrix * vec4(gl_Position.xyz, 1));
+        OUT.texCoord = vec2 (0, 1);
+        EmitVertex();
+
+        EndPrimitive();
+
+        // top right
+        gl_Position = gl_in[i].gl_Position;
+        gl_Position.z += particleSize;
+        gl_Position.y += particleSize;
+        gl_Position = projMatrix * viewMatrix * (modelMatrix * vec4(gl_Position.xyz, 1));
+        OUT.texCoord = vec2 (1, 0);
+
+        EmitVertex ();
+        // Then we do the other vertices of the quad ...
+        // Top Left
+        gl_Position = gl_in[i].gl_Position;
+        gl_Position.z -= particleSize;
+        gl_Position.y += particleSize;
+        gl_Position = projMatrix * viewMatrix * (modelMatrix * vec4(gl_Position.xyz, 1));
+        OUT.texCoord = vec2 (0, 0);
+        EmitVertex ();
+        // bottom right
+        gl_Position = gl_in[i].gl_Position;
+        gl_Position.z += particleSize;
+        gl_Position.y -= particleSize;
+        gl_Position = projMatrix * viewMatrix * (modelMatrix * vec4(gl_Position.xyz, 1));
+        OUT.texCoord = vec2 (1, 1);
+        EmitVertex ();
+        // bottom Left
+        gl_Position = gl_in[i].gl_Position;
+        gl_Position.z -= particleSize;
         gl_Position.y -= particleSize;
         gl_Position = projMatrix * viewMatrix * (modelMatrix * vec4(gl_Position.xyz, 1));
         OUT.texCoord = vec2 (0, 1);

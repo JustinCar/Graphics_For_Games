@@ -23,7 +23,11 @@ out Vertex {
     vec3 binormal;
     vec3 worldPos;
     vec4 shadowProj; 
+    float visibility;
 } OUT;
+
+const float density = 0.003;
+const float gradient = 1.5;
 
 float grow() 
 {
@@ -61,6 +65,13 @@ void main ( void ) {
     newPosition.y = grow();
 
     OUT.worldPos = (modelMatrix * vec4(newPosition, 1)).xyz;
+
+    //fog --------------------------------------------------
+    vec4 toCam = viewMatrix * vec4(OUT.worldPos, 1.0);
+    float dis = length(toCam.xyz);
+    OUT.visibility = exp(-pow((dis * density), gradient));
+    OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
+    //--------------------------------------------------
 
     OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition +( normal *1.5) ,1));
     

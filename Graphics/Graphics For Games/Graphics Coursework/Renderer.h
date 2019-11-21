@@ -26,6 +26,7 @@ public:
 
 	void reloadShaders();
 
+
 protected:
 
 	void DrawShadowScene(float msec);
@@ -43,11 +44,15 @@ protected:
 	Mesh* quad;
 	Mesh* terrain;
 	GLuint terrainHeightMap;
-	GLuint terrainGrassMap;
-	GLuint terrainStoneMap;
-	GLuint terrainSnowMap;
+
+	SkyBox* skyBoxNode;
+	Terrain* terrainNode;
+	Tree* treeNode;
+	Ocean* oceanNode;
+	Rain* rainNode;
 
 	int  drawCount;
+	float elapsedTime;
 
 	SceneNode* root;
 
@@ -55,12 +60,12 @@ protected:
 	Camera* camera;
 
 	GLuint cubeMap;
+	GLuint cubeMapFog;
 
 	GLuint shadowTex;
 	GLuint shadowFBO;
 
 	bool started;
-	float timeAtStart;
 };
 
 

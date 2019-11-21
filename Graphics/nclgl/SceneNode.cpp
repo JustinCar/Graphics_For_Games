@@ -9,12 +9,12 @@ SceneNode::SceneNode(Mesh* mesh, Vector4 colour) {
 	distanceFromCamera = 0.0f;
 	castShadows = false;
 	recieveShadows = false;
+	elapsedTime = 0;
 }
 
 SceneNode ::~SceneNode(void) {
 	for (unsigned int i = 0; i < children.size(); ++i) {
 		delete children[i];
-		
 	}
 }
 

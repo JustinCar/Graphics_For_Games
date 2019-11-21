@@ -9,8 +9,7 @@ in Vertex {
 out vec4 fragColour ;
 
 void main(void){
-	
-	fragColour  = texture(diffuseTex, IN.texCoord);
+
 	fragColour += IN.colour;
 	fragColour = normalize(fragColour);
 }

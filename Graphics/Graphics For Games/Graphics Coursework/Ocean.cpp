@@ -13,6 +13,10 @@ Ocean::Ocean()
 
 void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
+	bool isFoggy = false;
+	if (drawCount > 1)
+		isFoggy = true;
+
 	r.SetCurrentShader(shader);
 	r.SetShaderLight(*light);
 	glUniform3fv(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
@@ -23,9 +27,19 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 
 	glUniform1i(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"cubeTex"), 2);
-
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, *cubeMap);
+
+	glUniform1i(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"cubeTexFog"), 3);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, *cubeMapFog);
+
+	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"time"), msec / 1000);
+
+	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"isFoggy"), isFoggy);
 
 	float heightX = (1000 / 2.0f);
 

@@ -1,4 +1,4 @@
-﻿  Rain.cpp
+﻿  Terrain.cpp
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(29,1): warning C4305:  'argument': truncation from 'double' to 'const float'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(31,1): warning C4305:  'argument': truncation from 'double' to 'const float'
 C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(32,1): warning C4305:  'argument': truncation from 'double' to 'const float'

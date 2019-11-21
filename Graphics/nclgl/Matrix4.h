@@ -129,7 +129,7 @@ public:
 // equivalent to gluLookAt()  http://www.songho.ca/opengl/gl_camera.html
 // It returns 4x4 matrix
 ///////////////////////////////////////////////////////////////////////////////
-	Matrix4 lookAt(Vector3& eye, Vector3& target, Vector3& upDir)
+	static Matrix4 lookAt(Vector3& eye, Vector3& target, Vector3& upDir)
 	{
 		// compute the forward vector from target to eye
 		Vector3 forward = eye - target;

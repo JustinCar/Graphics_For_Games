@@ -21,6 +21,10 @@ uniform vec4 lightColour;
 uniform vec3 lightPos;
 uniform float lightRadius;
 
+uniform bool isFoggy;
+
+const vec3 fogColour = vec3(0.63, 0.63, 0.63);
+
 in Vertex {
     vec3 colour;
     vec2 texCoord;
@@ -29,6 +33,7 @@ in Vertex {
     vec3 binormal;
     vec3 worldPos;
     vec4 shadowProj;
+    float visibility;
 } IN;
 
 out vec4 fragColour;
@@ -109,4 +114,10 @@ void main ( void ) {
     colour += ( lightColour.rgb * sFactor ) * 0.33;
     fragColour = vec4 ( colour * atten * lambert , texture.a );
     fragColour.rgb += ( texture.rgb * lightColour.rgb ) * 0.3;
+
+    if (isFoggy) 
+    {
+        fragColour = mix(vec4(fogColour, 1.0), fragColour, IN.visibility);
+    }
+    
 }

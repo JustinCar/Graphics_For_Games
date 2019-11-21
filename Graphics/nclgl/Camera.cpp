@@ -77,7 +77,7 @@ void Camera::autoMove(float msec)
 	Vector3 heading = target - position;
 	heading = heading / distance(position, target);
 
-	position += heading * xSpeed;
+	position += heading * 1.0f;
 }
 
 void Camera::manualMove(float msec)
@@ -166,8 +166,7 @@ Matrix4 Camera::BuildViewMatrix()	{
 	}
 	else 
 	{
-		Matrix4 camPosition;
 
-		return camPosition.lookAt(position, look, Vector3(0.0f, 1.0f, 0.0f));
+		return Matrix4::lookAt(position, look, Vector3(0.0f, 1.0f, 0.0f));
 	}
 };

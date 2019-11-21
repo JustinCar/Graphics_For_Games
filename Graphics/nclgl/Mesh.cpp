@@ -83,8 +83,8 @@ Mesh* Mesh::GeneratePoints(int count) {
 	m->colours = new Vector4[m->numVertices];
 
 	for (int i = 0; i < count; ++i) {
-		m->vertices[i] = Vector3(rand() % 800 + 100, 500.0f, rand() % 800 + 100);
-		m->colours[i] = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		m->vertices[i] = Vector3(rand() % 2000 - 500, rand() % 800 + 100, rand() % 2000 - 500);
+		m->colours[i] = Vector4(0.0f, 0.8f, 1.0f, 1.0f);
 		m->textureCoords[i] = Vector2(0.0f, 0.0f);
 	}
 

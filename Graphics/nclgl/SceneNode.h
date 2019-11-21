@@ -61,6 +61,7 @@ protected:
 	bool castShadows;
 	bool recieveShadows;
 
+	float elapsedTime;
 
 	SceneNode* parent;
 	Mesh* mesh;
