@@ -7,6 +7,9 @@ Ocean::Ocean()
 	shader = 0;
 	isFoggy = false;
 
+	cubeMap = 0;
+	cubeMapFog = 0;
+
 	mesh = Mesh::GenerateQuad();
 	mesh->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/water.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
@@ -14,8 +17,11 @@ Ocean::Ocean()
 
 void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
-	if (drawCount > 2)
+	if (drawCount > 1)
 		isFoggy = true;
+
+	if (drawCount <= 1)
+		isFoggy = false;
 
 	r.SetCurrentShader(shader);
 	r.SetShaderLight(*light);

@@ -7,6 +7,9 @@ SkyBox::SkyBox()
 	timeAtBlend = 0;
 	blendBoxes = false;
 
+	cubeMap = 0;
+	cubeMapFog = 0;
+
 	mesh = Mesh::GenerateQuad();
 }
 

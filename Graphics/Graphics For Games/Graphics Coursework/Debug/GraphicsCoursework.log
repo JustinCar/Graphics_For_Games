@@ -1,28 +1,15 @@
-﻿  Renderer.cpp
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(29,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(31,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(32,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(33,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(34,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(35,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(36,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(37,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(38,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(48,18): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(9,1): warning C4005: 'RAW_WIDTH': macro redefinition
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Mesh.h(10): message : see previous definition of 'RAW_WIDTH'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(10,1): warning C4005: 'RAW_HEIGHT': macro redefinition
-  Terrain.cpp
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Mesh.h(11): message : see previous definition of 'RAW_HEIGHT'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(29,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(31,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(32,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(33,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(34,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(35,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(36,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(37,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(38,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-  Generating Code...
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\NCLGL\Camera.h(48,18): warning C4018: '<': signed/unsigned mismatch
-  GraphicsCoursework.vcxproj -> C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\Graphics For Games\Debug\GraphicsCoursework.exe
+﻿  Tree.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(29,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(31,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(32,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(33,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(34,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(35,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(36,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(37,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(38,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(48,18): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Tree.cpp(98,90): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Tree.cpp(98,66): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Graphics Coursework\Tree.cpp(99,42): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+  GraphicsCoursework.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\GraphicsCoursework.exe

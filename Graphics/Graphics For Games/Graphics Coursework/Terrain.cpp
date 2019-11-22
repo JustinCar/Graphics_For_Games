@@ -7,6 +7,8 @@ Terrain::Terrain()
 	lightShader = 0;
 	fog = false;
 
+	terrainHeightMap = 0;
+
 	stone = SOIL_load_OGL_texture(
 		TEXTUREDIR "Coursework/stone.png", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
@@ -52,15 +54,15 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 	if (drawCount < 0)
 		return;
 
-	if ((drawCount >= 1) && elapsedTime == 0)
-	{
-		elapsedTime = msec;
-	}
+	if (drawCount <= 1)
+		fog = false;
 
-	if ((drawCount > 3) && !fog)
+	if ((drawCount > 1) && !fog)
 	{
 		fog = true;
+		elapsedTime = msec;
 	}
+		
 
 	r.SetCurrentShader(lightShader);
 	r.SetShaderLight(*light);
@@ -106,7 +108,10 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-		"time"), msec - elapsedTime);
+		"time"), msec);
+
+	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"fogTime"), msec - elapsedTime);
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"isFoggy"), fog);

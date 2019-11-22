@@ -33,7 +33,7 @@ void main ( void ) {
         reflection = texture(cubeTex, reflect(incident, normalize(IN.normal)));
     } else 
     {
-        reflection = mix(texture(cubeTex, reflect(incident, normalize(IN.normal))), texture(cubeTexFog, reflect(incident, normalize(IN.normal))), clamp(time / 5, 0.0, 1.0));
+        reflection = mix(texture(cubeTex, reflect(incident, normalize(IN.normal))), texture(cubeTexFog, reflect(incident, normalize(IN.normal))), clamp(time / 56, 0.0, 1.0));
     }
 
     fragColour = (lightColour * diffuse * atten)*(diffuse + reflection);

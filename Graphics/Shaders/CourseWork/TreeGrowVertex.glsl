@@ -46,7 +46,7 @@ float grow()
 
     if (pos < limit) 
     {
-        pos += time / 500;
+        pos += time / 300;
 
         if (pos > limit) 
         {

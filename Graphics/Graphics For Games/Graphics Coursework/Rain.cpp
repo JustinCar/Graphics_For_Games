@@ -5,6 +5,7 @@ Rain::Rain()
 	camera = 0;
 	light = 0;
 	shader = 0;
+	cubeMap = 0;
 
 	mesh = Mesh::GeneratePoints(100000);
 	mesh->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR "Coursework/water.png",

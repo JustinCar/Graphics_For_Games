@@ -228,7 +228,6 @@ void Renderer::UpdateScene(float msec) {
 		light->SetPosition(light->GetPosition() + Vector3(0, 0, -10));
 	}
 
-
 	viewMatrix = camera->BuildViewMatrix();
 	waterRotate += msec / 3000.0f;
 }
@@ -240,23 +239,25 @@ void Renderer::RenderScene(float msec) {
 		cout << camera->GetPosition() << std::endl;
 	}
 
-	elapsedTime += msec;
-
+	// reset
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
+		elapsedTime = msec;
 		drawCount = 1;
 	}
+
+	msec -= elapsedTime;
 
 	float seconds = msec / 1000;
 
 	drawCount = 1;
 
-	if (seconds > 40) 
+	if (seconds > 30) 
 		drawCount = 2;
 
-	if (seconds > 50)
+	if (seconds > 35)
 		drawCount = 3;
 
-	if (seconds > 55)
+	if (seconds > 40)
 		drawCount = 4;
 
 	DrawShadowScene(msec); // First render pass ...

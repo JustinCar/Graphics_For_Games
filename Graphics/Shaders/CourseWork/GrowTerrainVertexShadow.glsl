@@ -36,14 +36,9 @@ float grow()
     float limit = (height * 260);
     float pos = position.y;
 
-    if () 
-    {
-        
-    }
-
     if (pos < limit) 
     {
-        pos += time / 50;
+        pos += time / 80;
 
         if (pos > limit) 
         {
@@ -65,7 +60,6 @@ void main ( void ) {
     OUT.binormal = normalize ( normalMatrix *
        normalize ( cross ( normal , tangent )));
         
-
     vec3 newPosition = position;
     newPosition.y = grow();
 
@@ -74,8 +68,19 @@ void main ( void ) {
     //fog --------------------------------------------------
     vec4 toCam = viewMatrix * vec4(OUT.worldPos, 1.0);
     float dis = length(toCam.xyz);
+
+    // float densityInc = 0;
+    // densityInc += (0.000001 * time);
+
+    // if(densityInc >= density)
+    // {
+    //     densityInc = density;
+    // }
     OUT.visibility = exp(-pow((dis * density), gradient));
+
     OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
+
+    
     //--------------------------------------------------
 
     OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition +( normal *1.5) ,1));
