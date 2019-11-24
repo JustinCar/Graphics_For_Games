@@ -142,7 +142,6 @@ Mesh* Mesh::GenerateTerrain() {
 	m->tangents = new Vector3[m->numVertices];
 	m->indices = new GLuint[m->numIndices];
 
-	vector<Vector3> positionsForTrees;
 
 	int VERTICES_SEPARATION = 1;
 

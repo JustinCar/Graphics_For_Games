@@ -12,11 +12,15 @@ in vec2 texCoord;
 uniform float time;
 uniform bool isFoggy;
 
+const float density = 0.003;
+const float gradient = 1.5;
+
 out Vertex {
     vec4 colour;
     vec2 texCoord;
     vec3 normal;
     vec3 worldPos;
+    float visibility;
 } OUT ;
 
 void main ( void ) {
@@ -29,11 +33,13 @@ void main ( void ) {
 
     vec3 newPos = position;
 
+    newPos.y = (sin(newPos.x) + cos(newPos.z));
+
     if (isFoggy) 
     {
-        float limit = newPos.z - 7;
+        float limit = newPos.y + 7;
 
-        newPos.z -= time / 10;
+        newPos.z += time / 10;
 
         if (newPos.z <= limit) 
         {
@@ -41,8 +47,15 @@ void main ( void ) {
         }
     }
     
-    
-    OUT.worldPos = ( modelMatrix * vec4 ( position ,1)). xyz;
+    OUT.worldPos = ( modelMatrix * vec4 ( position, 1)).xyz;
+
+    //fog --------------------------------------------------
+    vec4 toCam = viewMatrix * vec4(OUT.worldPos, 1.0);
+    float dis = length(toCam.xyz);
+    OUT.visibility = exp(-pow((dis * density), gradient));
+    OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
+    //--------------------------------------------------
+
     gl_Position = ( projMatrix * viewMatrix * modelMatrix ) *
         vec4 ( newPos , 1.0);
 }

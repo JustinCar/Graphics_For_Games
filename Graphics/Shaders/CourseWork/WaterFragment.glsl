@@ -4,8 +4,11 @@ uniform sampler2D diffuseTex;
 uniform samplerCube cubeTex;
 uniform samplerCube cubeTexFog;
 uniform float time;
-uniform bool isFoggy;
 
+uniform bool isFoggy;
+uniform float fogTime;
+
+const vec3 fogColour = vec3(0.63, 0.63, 0.63);
 
 uniform vec4 lightColour;
 uniform vec3 lightPos;
@@ -17,6 +20,7 @@ in Vertex {
     vec2 texCoord;
     vec3 normal;
     vec3 worldPos;
+    float visibility;
 } IN;
 
 out vec4 fragColour;
@@ -37,4 +41,24 @@ void main ( void ) {
     }
 
     fragColour = (lightColour * diffuse * atten)*(diffuse + reflection);
+
+    //fragColour = mix(vec4(fogColour, 1.0), fragColour, 0.1);
+    //fragColour = vec4(fogColour, 1.0);
+
+
+    if (isFoggy) 
+    {
+        float nTime = fogTime / 1000;
+        float visibility = nTime / 10;
+        visibility = 1 - visibility;
+
+        if (visibility <= IN.visibility) 
+        {
+            visibility = IN.visibility;
+        }
+
+        fragColour = mix(vec4(fogColour, 1.0), fragColour, visibility);
+    }
+
+    
 }

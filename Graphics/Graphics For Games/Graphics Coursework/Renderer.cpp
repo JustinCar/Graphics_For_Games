@@ -94,6 +94,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	oceanNode->SetLight(light);
 	oceanNode->SetCamera(camera);
 	oceanNode->SetShader(reflectShader);
+	//oceanNode->setCastShadows();
 	oceanNode->setRecieveShadows();
 	oceanNode->SetCubeMap(&cubeMap);
 	oceanNode->SetCubeMapFog(&cubeMapFog);
@@ -119,6 +120,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	SetTextureRepeating(treeChildren.at(0)->GetBumpMap(), true);
 
 	SetTextureRepeating(oceanNode->GetMesh()->GetTexture(), true);
+	SetTextureRepeating(oceanNode->GetMesh()->GetBumpMap(), true);
 	SetTextureRepeating(terrainNode->GetStone(), true);
 	SetTextureRepeating(terrainNode->GetGrass(), true);
 	SetTextureRepeating(terrainNode->GetSnow(), true);

@@ -68,6 +68,7 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 	r.SetShaderLight(*light);
 
 	r.modelMatrix.ToIdentity();
+	r.textureMatrix.ToIdentity();
 
 	r.UpdateShaderMatrices();
 

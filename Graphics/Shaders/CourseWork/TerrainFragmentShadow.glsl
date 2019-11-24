@@ -22,9 +22,7 @@ uniform vec3 lightPos;
 uniform float lightRadius;
 
 uniform bool isFoggy;
-
 uniform float fogTime;
-
 const vec3 fogColour = vec3(0.63, 0.63, 0.63);
 
 in Vertex {
@@ -130,4 +128,5 @@ void main ( void ) {
 
         fragColour = mix(vec4(fogColour, 1.0), fragColour, visibility);
     }
+    
 }
