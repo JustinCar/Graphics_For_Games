@@ -41,15 +41,22 @@ Tree::Tree()
 void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
 	if (drawCount < 1)
-		return;
-
-	if (drawCount <= 1)
+	{
+		elapsedTime = 0;
 		fog = false;
+		return;
+	}
+
+	if (drawCount <= 1 && elapsedTime == 0)
+	{
+		fog = false;
+		elapsedTime = msec;
+	}
 
 	if (drawCount > 1 && !fog)
 	{
 		fog = true;
-		elapsedTime = msec;
+		fogElapsedTime = msec;
 	}
 
 	for (int i = 0; i < numTrees; i++)
@@ -81,10 +88,10 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 			"shadowTex"), 11);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-			"time"), msec);
+			"time"), msec - elapsedTime);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-			"fogTime"), msec - elapsedTime);
+			"fogTime"), msec - fogElapsedTime);
 
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"isFoggy"), fog);

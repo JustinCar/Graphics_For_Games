@@ -29,6 +29,8 @@ protected:
 
 	bool fog;
 
+	float fogElapsedTime;
+
 	GLuint* terrainHeightMap;
 
 	int treePositions[1000][2];

@@ -28,7 +28,7 @@ public:
 
 		look = Vector3(506.605, 116.561, 560.64);
 
-		positions.push_back(Vector3(160.623, 497.495, 1142.51));
+		//positions.push_back(Vector3(160.623, 497.495, 1142.51));
 		positions.push_back(Vector3(1016.81, 497.495, 1101.25));
 		positions.push_back(Vector3(984.046, 497.495, 53.6444));
 		positions.push_back(Vector3(32.6108, 185.228, -17.4477));
@@ -80,7 +80,7 @@ public:
 
 	//Builds a view matrix for the current camera variables, suitable for sending straight
 	//to a vertex shader (i.e it's already an 'inverse camera matrix').
-	Matrix4 BuildViewMatrix();
+	virtual Matrix4 BuildViewMatrix();
 
 	//Gets position in world space
 	Vector3 GetPosition() const { return position;}

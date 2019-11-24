@@ -36,6 +36,8 @@ protected:
 
 	bool fog;
 
+	float fogElapsedTime;
+
 	GLuint* terrainHeightMap;
 	GLuint terrainGrassMap;
 	GLuint terrainStoneMap;

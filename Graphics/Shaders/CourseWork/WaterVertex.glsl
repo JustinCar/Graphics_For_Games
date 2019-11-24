@@ -37,13 +37,13 @@ void main ( void ) {
 
     if (isFoggy) 
     {
-        float limit = newPos.y + 7;
+        float limit = newPos.y - 5;
 
-        newPos.z += time / 10;
+        newPos.y -= time / 5;
 
-        if (newPos.z <= limit) 
+        if (newPos.y <= limit) 
         {
-            newPos.z = limit;
+            newPos.y = limit;
         }
     }
     

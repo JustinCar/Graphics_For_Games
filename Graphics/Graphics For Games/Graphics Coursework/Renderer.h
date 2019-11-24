@@ -30,7 +30,7 @@ public:
 protected:
 
 	void DrawShadowScene(float msec);
-	void DrawCombinedScene(float msec);
+	void DrawCombinedScene(float msec, int num);
 
 	Shader* lightShader;
 	Shader* reflectShader;
@@ -51,6 +51,7 @@ protected:
 	Ocean* oceanNode;
 	Rain* rainNode;
 
+	int startTime;
 	int  drawCount;
 	float elapsedTime;
 

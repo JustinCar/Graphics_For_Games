@@ -5,7 +5,8 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	terrain = Mesh::GenerateTerrain();
 	root = new SceneNode();
 
-	drawCount = 0;
+	drawCount = -1;
+	startTime = 30;
 
 	skyBoxNode = new SkyBox();
 	root->AddChild(skyBoxNode);
@@ -241,34 +242,42 @@ void Renderer::RenderScene(float msec) {
 		cout << camera->GetPosition() << std::endl;
 	}
 
-	// reset
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
-		elapsedTime = msec;
-		drawCount = 1;
-	}
-
 	msec -= elapsedTime;
 
 	float seconds = msec / 1000;
 
-	drawCount = 1;
+	if (seconds > startTime)
+		drawCount = 1;
 
-	if (seconds > 30) 
+	if (seconds > startTime + 20)
 		drawCount = 2;
 
-	if (seconds > 35)
+	if (seconds > startTime + 25)
 		drawCount = 3;
 
-	if (seconds > 40)
+	if (seconds > startTime + 30)
 		drawCount = 4;
 
+	// reset
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
+		elapsedTime = msec - startTime * 1000;
+		drawCount = -1;
+	}
+
 	DrawShadowScene(msec); // First render pass ...
-	DrawCombinedScene(msec); // Second render pass ...
+	DrawCombinedScene(msec, 0); // Second render pass ...
+
+	if (drawCount < 3) 
+	{
+		glViewport(width - width / 4, height - height / 4, width / 4, height / 4);
+		DrawCombinedScene(msec, 1); // Second render pass ...
+	}
 
 	SwapBuffers();
 }
 
 void Renderer::DrawShadowScene(float msec) {
+
 	glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
 
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -309,7 +318,7 @@ void Renderer::DrawShadowScene(float msec) {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Renderer::DrawCombinedScene(float msec) {
+void Renderer::DrawCombinedScene(float msec, int num) {
 
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_L)) {
 		projMatrix = Matrix4::Perspective(10.0f, 5000.0f,
@@ -323,7 +332,11 @@ void Renderer::DrawCombinedScene(float msec) {
 		projMatrix = Matrix4::Perspective(10.0f, 5000.0f,
 			(float)width / (float)height, 45.0f);
 
-		viewMatrix = camera->BuildViewMatrix();
+		if (num == 0) 
+			viewMatrix = camera->BuildViewMatrix();
+		else 
+			viewMatrix = Matrix4::BuildViewMatrix(Vector3(500.0f, 1000.0f, 500.0f), Vector3(500.0f, 0.0f, 500.0f), Vector3(1.0f, 0.0f, 0.0f));
+		
 	}
 
 	for (vector < SceneNode* >::const_iterator i =

@@ -29,7 +29,10 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 		
 
 	if (drawCount <= 1)
+	{
 		isFoggy = false;
+	}
+		
 
 	r.SetCurrentShader(shader);
 	r.SetShaderLight(*light);
@@ -59,7 +62,7 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 		"bumpTex"), 4);
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-		"time"), msec / 1000);
+		"time"), (msec - elapsedTime) / 1000);
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"fogTime"), msec - elapsedTime);

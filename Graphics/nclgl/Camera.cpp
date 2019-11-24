@@ -166,7 +166,6 @@ Matrix4 Camera::BuildViewMatrix()	{
 	}
 	else 
 	{
-
 		return Matrix4::lookAt(position, look, Vector3(0.0f, 1.0f, 0.0f));
 	}
 };

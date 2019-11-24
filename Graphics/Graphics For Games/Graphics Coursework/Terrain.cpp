@@ -52,15 +52,22 @@ Terrain::Terrain()
 void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) {
 
 	if (drawCount < 0)
-		return;
-
-	if (drawCount <= 1)
+	{
+		elapsedTime = 0;
 		fog = false;
+		return;
+	}
 
+	if (drawCount <= 1 && elapsedTime == 0)
+	{
+		fog = false;
+		elapsedTime = msec;
+	}
+		
 	if ((drawCount > 1) && !fog)
 	{
 		fog = true;
-		elapsedTime = msec;
+		fogElapsedTime = msec;
 	}
 		
 
@@ -107,12 +114,11 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 	glUniform1i(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"lavaTex"), 4);
 
+	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"time"), msec - elapsedTime);
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-		"time"), msec);
-
-	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-		"fogTime"), msec - elapsedTime);
+		"fogTime"), msec - fogElapsedTime);
 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"isFoggy"), fog);
