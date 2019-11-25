@@ -13,6 +13,8 @@
 #include "Ocean.h"
 #include "SkyBox.h"
 #include "Rain.h"
+#include "Lightning.h"
+#include "HellKnight.h"
 
 #define SHADOWSIZE 2048
 
@@ -38,6 +40,8 @@ protected:
 	Shader* treeShader;
 	Shader* shadowShader;
 	Shader* rainShader;
+	Shader* lightningShader;
+	Shader* hellShader;
 
 	int treePositions[1000][2];
 	int numTrees;
@@ -50,6 +54,11 @@ protected:
 	Tree* treeNode;
 	Ocean* oceanNode;
 	Rain* rainNode;
+	Lightning* lightningNode;
+	HellKnight* hellKnightNode;
+
+	MD5FileData* hellData;
+	MD5Node* hellNode;
 
 	int startTime;
 	int  drawCount;

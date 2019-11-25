@@ -165,5 +165,43 @@ public:
 
 		return matrix;
 	}
+
+	static Matrix4 lightningLookAt(Vector3& eye, Vector3& target, Vector3& upDir)
+	{
+		// compute the forward vector from target to eye
+		Vector3 forward = eye - target;
+		forward.Normalise();                 // make unit length
+
+		// compute the left vector
+		Vector3 left = upDir.Cross(forward, upDir); // cross product
+		left.Normalise();
+
+
+		// recompute the orthonormal up vector
+		Vector3 up = forward.Cross(left, forward);    // cross product
+
+		// init 4x4 matrix
+		Matrix4 matrix;
+		matrix.ToIdentity();
+
+		// set rotation part, inverse rotation matrix: M^-1 = M^T for Euclidean transform
+		matrix.values[0] = 1;
+		matrix.values[4] = 0;
+		matrix.values[8] = 0;
+		matrix.values[1] = up.x;
+		matrix.values[5] = up.y;
+		matrix.values[9] = up.z;
+		matrix.values[2] = 0;
+		matrix.values[6] = 0;
+		matrix.values[10] = 1;
+
+		// set translation part
+	/*	matrix.values[12] = -left.x * eye.x - left.y * eye.y - left.z * eye.z;
+		matrix.values[13] = -up.x * eye.x - up.y * eye.y - up.z * eye.z;
+		matrix.values[14] = -forward.x * eye.x - forward.y * eye.y - forward.z * eye.z;*/
+
+		return matrix;
+	}
+
 };
 

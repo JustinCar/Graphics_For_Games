@@ -93,6 +93,45 @@ Mesh* Mesh::GeneratePoints(int count) {
 	return m;
 }
 
+Mesh* Mesh::GenerateLightningPoints(int count) {
+	Mesh* m = new Mesh();
+
+	m->numVertices = count;
+	m->type = GL_POINTS;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->textureCoords = new Vector2[m->numVertices];
+	m->colours = new Vector4[m->numVertices];
+
+	float xPos = rand() % 2000 - 500;
+	float zPos = rand() % 2000 - 500;
+	float yPos = 1000;
+
+	for (int i = 0; i < count; ++i) {
+		m->vertices[i] = Vector3(xPos, yPos - i, zPos);
+		m->colours[i] = Vector4(0.0f, 1.0f, 1.0f, 1.0f);
+		m->textureCoords[i] = Vector2(0.0f, 0.0f);
+	}
+
+	m->BufferData();
+
+	return m;
+}
+
+void Mesh::repositionPoints()
+{
+
+	float xPos = rand() % 2000 - 500;
+	float zPos = rand() % 2000 - 500;
+	float yPos = 1000;
+
+	for (int i = 0; i < numVertices; ++i) {
+		vertices[i] = Vector3(xPos, yPos - (i / 2), zPos);
+	}
+
+	BufferData();
+}
+
 Mesh* Mesh::GenerateQuad() {
 	Mesh* m = new Mesh();
 
@@ -130,7 +169,7 @@ Mesh* Mesh::GenerateTerrain() {
 	Mesh* m = new Mesh();
 
 	m->numVertices = RAW_WIDTH * RAW_HEIGHT;
-	m->type = GL_TRIANGLE_STRIP;
+	m->type = GL_TRIANGLES;
 
 	m->numVertices = RAW_WIDTH * RAW_HEIGHT;
 	m->numIndices = (RAW_WIDTH - 1) * (RAW_HEIGHT - 1) * 6;

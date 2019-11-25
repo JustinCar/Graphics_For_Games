@@ -24,6 +24,19 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	rainNode = new Rain();
 	root->AddChild(rainNode);
 
+	lightningNode = new Lightning();
+	root->AddChild(lightningNode);
+
+	hellData = new MD5FileData(MESHDIR"hellknight.md5mesh");
+	hellNode = new MD5Node(*hellData);
+	hellData->AddAnim(MESHDIR"idle2.md5anim");
+	hellNode->PlayAnim(MESHDIR"idle2.md5anim");
+
+	hellKnightNode = new HellKnight();
+
+	hellKnightNode->SetHellNode(hellNode);
+	root->AddChild(hellKnightNode);
+
 	started = false;
 	elapsedTime = 0.0f;
 
@@ -50,6 +63,10 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	rainShader = new Shader(SHADERDIR "CourseWork/RainVertex.glsl",
 		SHADERDIR "CourseWork/RainFragment.glsl",
 		SHADERDIR "CourseWork/RainGeom.glsl");
+	lightningShader = new Shader(SHADERDIR "CourseWork/lightningVertex.glsl",
+		SHADERDIR "CourseWork/lightningFragment.glsl");
+	hellShader = new Shader(SHADERDIR"skeletonVertexSimple.glsl", 
+		SHADERDIR"skeletonFragment.glsl");
 
 	terrainHeightMap = SOIL_load_OGL_texture(TEXTUREDIR "Coursework/heightMapVSmall.png",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
@@ -74,7 +91,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
 		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()
-		|| !rainShader->LinkProgram()) {
+		|| !rainShader->LinkProgram() || !lightningShader->LinkProgram() || !hellShader->LinkProgram()) {
 		return;
 	}
 
@@ -107,6 +124,11 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	rainNode->SetShader(rainShader);
 	rainNode->SetLight(light);
 
+	lightningNode->SetShader(lightningShader);
+	lightningNode->SetCamera(camera);
+
+	hellKnightNode->SetShader(hellShader);
+
 	if (!cubeMap) {
 		return;
 	}
@@ -130,6 +152,8 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	SetTextureRepeating(terrainNode->GetGrassBump(), true);
 	SetTextureRepeating(terrainNode->GetStoneBump(), true);
 	SetTextureRepeating(terrainNode->GetSnowBump(), true);
+
+	SetTextureRepeating(lightningNode->GetMesh()->GetTexture(), true);
 
 	// Shadow mapping ---------------------------
 	glGenTextures(1, &shadowTex);
@@ -164,6 +188,7 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+	//glEnable(GL_CULL_FACE);
 
 }
 
@@ -178,6 +203,11 @@ Renderer ::~Renderer(void) {
 	delete lightShader;
 	delete light;
 	delete shadowShader;
+	delete hellData;
+	delete hellNode;
+	delete rainShader;
+	delete lightningShader;
+	delete hellShader;
 
 	currentShader = 0;
 }
@@ -193,14 +223,20 @@ void Renderer::reloadShaders()
 		SHADERDIR "CourseWork/TerrainFragmentShadow.glsl");
 	treeShader = new Shader(SHADERDIR "CourseWork/TreeGrowVertex.glsl",
 		SHADERDIR "CourseWork/TreeGrowFragment.glsl");
+	shadowShader = new Shader(SHADERDIR "shadowVert.glsl",
+		SHADERDIR "shadowFrag.glsl");
 	rainShader = new Shader(SHADERDIR "CourseWork/RainVertex.glsl",
 		SHADERDIR "CourseWork/RainFragment.glsl",
 		SHADERDIR "CourseWork/RainGeom.glsl");
+	lightningShader = new Shader(SHADERDIR "CourseWork/lightningVertex.glsl",
+		SHADERDIR "CourseWork/lightningFragment.glsl");
+	hellShader = new Shader(SHADERDIR"skeletonVertexSimple.glsl",
+		SHADERDIR"skeletonFragment.glsl");
 
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
 		!skyboxShader->LinkProgram() || !treeShader->LinkProgram() || !shadowShader->LinkProgram()
-		|| !rainShader->LinkProgram()) {
+		|| !rainShader->LinkProgram() || !lightningShader->LinkProgram() || !hellShader->LinkProgram()) {
 		return;
 	}
 
@@ -209,6 +245,8 @@ void Renderer::reloadShaders()
 	oceanNode->SetShader(reflectShader);
 	skyBoxNode->SetShader(skyboxShader);
 	rainNode->SetShader(rainShader);
+	lightningNode->SetShader(lightningShader);
+	hellKnightNode->SetShader(hellShader);
 }
 
 void Renderer::UpdateScene(float msec) {
@@ -230,6 +268,7 @@ void Renderer::UpdateScene(float msec) {
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RIGHT)) {
 		light->SetPosition(light->GetPosition() + Vector3(0, 0, -10));
 	}
+	hellNode->Update(msec);
 
 	viewMatrix = camera->BuildViewMatrix();
 	waterRotate += msec / 3000.0f;

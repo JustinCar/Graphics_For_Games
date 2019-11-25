@@ -1,13 +1,44 @@
 ﻿  Camera.cpp
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(29,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(32,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(33,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(34,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(35,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(36,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(37,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(38,1): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.h(48,18): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.cpp(16,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\nclgl\Camera.cpp(68,21): warning C4018: '>=': signed/unsigned mismatch
-  nclgl.vcxproj -> C:\Users\Justin\Documents\GameDev\Projects\Graphics_For_Games\Graphics\Graphics For Games\Debug\nclgl.lib
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(29,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(32,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(33,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(34,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(35,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(36,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(37,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(38,1): warning C4305:  'argument': truncation from 'double' to 'const float'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.h(48,18): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.cpp(16,39): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
+  CubeRobot.cpp
+  Frustum.cpp
+  HeightMap.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Camera.cpp(68,21): warning C4018:  '>=': signed/unsigned mismatch
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\HeightMap.h(9,1): warning C4005:  'RAW_WIDTH': macro redefinition
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(10): message :  see previous definition of 'RAW_WIDTH'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\HeightMap.h(10,1): warning C4005:  'RAW_HEIGHT': macro redefinition
+  Light.cpp
+  MD5Anim.cpp
+  MD5FileData.cpp
+  MD5Mesh.cpp
+  MD5Node.cpp
+  Matrix4.cpp
+  Mesh.cpp
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.h(11): message :  see previous definition of 'RAW_HEIGHT'
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(86,83): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(86,62): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(86,42): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(106,13): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(107,13): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(124,13): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(125,13): warning C4244:  'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(128,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(192,35): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  OBJMesh.cpp
+  OGLRenderer.cpp
+  Quaternion.cpp
+  SceneNode.cpp
+  Shader.cpp
+  Window.cpp
+  Generating Code...
+C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\nclgl\Mesh.cpp(192,7): warning C4244:  'argument': conversion from 'int' to 'const float', possible loss of data
+  nclgl.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\nclgl.lib

@@ -22,6 +22,7 @@ public:
 	static Mesh* GenerateQuad();
 	static Mesh* GenerateTerrain();
 	static Mesh* GeneratePoints(int count);
+	static Mesh* GenerateLightningPoints(int count);
 
 	void SetTexture(GLuint tex) { texture = tex; }
 	GLuint GetTexture() { return texture; }
@@ -52,6 +53,8 @@ public:
 	Vector3* getVertices() { return vertices; }
 	GLuint getNumVertices() { return numVertices; }
 
+	void repositionPoints();
+
 protected:
 	void BufferData();
 
@@ -59,7 +62,6 @@ protected:
 	unsigned int* indices;
 	
 	Vector3* normals;
-
 
 	GLuint arrayObject;
 	GLuint bufferObject[MAX_BUFFER];

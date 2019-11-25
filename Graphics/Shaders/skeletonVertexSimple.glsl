@@ -16,7 +16,11 @@ layout(location = 10) in vec2 weighting;
 
 out Vertex	{
 	vec2 	texCoord;
+	float visibility;
 } OUT;
+
+const float density = 0.003;
+const float gradient = 1.5;
 
 void main(void)	{
 	int weightElements 	= int(weighting.x);	//These work!
@@ -41,6 +45,15 @@ void main(void)	{
 	vertPos.w = 1.0f;
 	
 	OUT.texCoord 	= texCoord;
+
+	vec3 worldPos = (modelMatrix * vec4(position, 1)).xyz;
+
+	//fog --------------------------------------------------
+    vec4 toCam = viewMatrix * vec4(worldPos, 1.0);
+    float dis = length(toCam.xyz);
+    OUT.visibility = exp(-pow((dis * density), gradient));
+    OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
+    //--------------------------------------------------
 	
 	gl_Position		= (projMatrix * viewMatrix * modelMatrix) * vertPos;
 }

@@ -72,6 +72,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Coursework.cpp" />
+    <ClCompile Include="HellKnight.cpp" />
+    <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Rain.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -80,6 +82,8 @@
     <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HellKnight.h" />
+    <ClInclude Include="Lightning.h" />
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="Rain.h" />
     <ClInclude Include="Renderer.h" />
