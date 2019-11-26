@@ -93,41 +93,34 @@ Mesh* Mesh::GeneratePoints(int count) {
 	return m;
 }
 
-Mesh* Mesh::GenerateLightningPoints(int count) {
+Mesh* Mesh::GenerateLightningPoint() {
 	Mesh* m = new Mesh();
 
-	m->numVertices = count;
+	m->numVertices = 1;
 	m->type = GL_POINTS;
 
 	m->vertices = new Vector3[m->numVertices];
 	m->textureCoords = new Vector2[m->numVertices];
 	m->colours = new Vector4[m->numVertices];
 
-	float xPos = rand() % 2000 - 500;
-	float zPos = rand() % 2000 - 500;
-	float yPos = 1000;
+	m->vertices[0] = Vector3(0, 0, 0);
+	m->colours[0] = Vector4(0.0f, 1.0f, 1.0f, 1.0f);
+	m->textureCoords[0] = Vector2(0.0f, 0.0f);
 
-	for (int i = 0; i < count; ++i) {
-		m->vertices[i] = Vector3(xPos, yPos - i, zPos);
-		m->colours[i] = Vector4(0.0f, 1.0f, 1.0f, 1.0f);
-		m->textureCoords[i] = Vector2(0.0f, 0.0f);
-	}
 
 	m->BufferData();
 
 	return m;
 }
 
-void Mesh::repositionPoints()
+void Mesh::repositionPoint()
 {
 
-	float xPos = rand() % 2000 - 500;
-	float zPos = rand() % 2000 - 500;
-	float yPos = 1000;
+	float xPos = rand() % 1100 - 100;
+	float zPos = rand() % 1100 - 100;
+	float yPos = 700;
 
-	for (int i = 0; i < numVertices; ++i) {
-		vertices[i] = Vector3(xPos, yPos - (i / 2), zPos);
-	}
+	vertices[0] = Vector3(xPos, yPos, zPos);
 
 	BufferData();
 }

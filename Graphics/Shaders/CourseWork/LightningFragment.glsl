@@ -1,5 +1,7 @@
 #version 150 core
 uniform sampler2D diffuseTex;
+uniform sampler2D diffuseTex2;
+uniform int texCount;
 
 in Vertex {
 	vec2 texCoord;
@@ -10,11 +12,19 @@ out vec4 fragColour ;
 
 void main(void){
 
-    fragColour  = texture(diffuseTex, IN.texCoord);
-	//fragColour += IN.colour;
-
-    if (fragColour.r < 0.4 && fragColour.g < 0.4 && fragColour.b < 0.4) 
+    if (texCount == 0) 
     {
-        discard;
+        fragColour  = texture(diffuseTex, IN.texCoord);
+        if (fragColour.b < 0.88) 
+        {
+            discard;
+        }
+    } else 
+    {
+        fragColour  = texture(diffuseTex2, IN.texCoord);
+        if (fragColour.g < 0.88) 
+        {
+            discard;
+        } 
     }
 }

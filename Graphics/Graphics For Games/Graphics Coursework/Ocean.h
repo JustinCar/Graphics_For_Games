@@ -4,6 +4,9 @@
 #include "../../NCLGL/SceneNode.h"
 #include "../../nclgl/OBJMesh.h"
 
+// Texture:
+// https://assetstore.unity.com/packages/2d/textures-materials/water/stylize-water-texture-153577
+
 class Ocean : public SceneNode {
 public:
 	Ocean();

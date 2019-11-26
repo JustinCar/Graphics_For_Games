@@ -10,6 +10,7 @@ SceneNode::SceneNode(Mesh* mesh, Vector4 colour) {
 	castShadows = false;
 	recieveShadows = false;
 	elapsedTime = 0;
+	lightningPos.ToZero();
 }
 
 SceneNode ::~SceneNode(void) {

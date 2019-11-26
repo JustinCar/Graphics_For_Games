@@ -4,6 +4,9 @@
 #include "../../NCLGL/SceneNode.h"
 #include "../../nclgl/OBJMesh.h"
 #include <cmath>
+#include "Terrain.h"
+#include "Ocean.h"
+#include "Tree.h"
 
 class Lightning : public SceneNode {
 public:
@@ -15,19 +18,34 @@ public:
 	void SetShader(Shader* s) { shader = s; };
 	void SetLight(Light* l) { light = l; };
 	void SetCamera(Camera* c) { camera = c; };
+	void SetTerrain(Terrain* t) { terrain = t; };
+	void SetOcean(Ocean* o) { ocean = o; };
+	void SetTree(Tree* t) { tree = t; };
+
+	float getXPos() { return heightX; };
+	float getZPos() { return heightZ; };
 
 protected:
-
-	OBJMesh* tree;
 
 	Shader* shader;
 	Light* light;
 	Camera* camera;
 
-	bool fog;
+	Terrain* terrain;
+	Ocean* ocean;
+	Tree* tree;
+
 	float coolDown;
 	float length;
 	bool playing;
+
+	float heightX;
+	float heightZ;
+
+	GLuint tex1;
+	GLuint tex2;
+
+	Vector3 position;
 
 	int textureCount;
 

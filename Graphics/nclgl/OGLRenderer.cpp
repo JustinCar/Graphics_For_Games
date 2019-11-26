@@ -266,6 +266,10 @@ void OGLRenderer::DebugCallback(GLuint source, GLuint type,GLuint id, GLuint sev
 		string typeName;
 		string severityName;
 
+		if (type == GL_DEBUG_TYPE_OTHER_ARB) {
+			return;
+		}
+
 		switch(source) {
 			case GL_DEBUG_SOURCE_API_ARB			: sourceName = "Source(OpenGL)"			;break;
 			case GL_DEBUG_SOURCE_WINDOW_SYSTEM_ARB	: sourceName = "Source(Window System)"	;break;

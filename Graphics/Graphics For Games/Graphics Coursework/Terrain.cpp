@@ -123,6 +123,21 @@ void Terrain::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount) 
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"isFoggy"), fog);
 
+	glUniform3fv(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"lightningPos"), 1, (float*)& lightningPos);
+
+	if (lightningPos != Vector3(0, 0, 0)) 
+	{
+		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"lightningPLaying"), true);
+	}
+	else 
+	{
+		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"lightningPLaying"), false);
+	}
+	
+
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, *terrainHeightMap);
 	glUniform1i(glGetUniformLocation(r.GetCurrentShader()->GetProgram(), "heightMap"), 6);

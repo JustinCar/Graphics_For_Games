@@ -25,6 +25,9 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	root->AddChild(rainNode);
 
 	lightningNode = new Lightning();
+	lightningNode->SetTerrain(terrainNode);
+	lightningNode->SetOcean(oceanNode);
+	lightningNode->SetTree(treeNode);
 	root->AddChild(lightningNode);
 
 	hellData = new MD5FileData(MESHDIR"hellknight.md5mesh");
@@ -48,8 +51,6 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		Vector4(1.0f, 1.0f, 1.0f, 1),
 		(1000 * 500));
 
-	/*reflectShader = new Shader(SHADERDIR "PerPixelVertex.glsl",
-		SHADERDIR "reflectFragment.glsl");*/
 	reflectShader = new Shader(SHADERDIR "CourseWork/WaterVertex.glsl",
 		SHADERDIR "CourseWork/WaterFragment.glsl");
 	skyboxShader = new Shader(SHADERDIR"CourseWork/skyboxVertex.glsl",
@@ -64,7 +65,8 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 		SHADERDIR "CourseWork/RainFragment.glsl",
 		SHADERDIR "CourseWork/RainGeom.glsl");
 	lightningShader = new Shader(SHADERDIR "CourseWork/lightningVertex.glsl",
-		SHADERDIR "CourseWork/lightningFragment.glsl");
+		SHADERDIR "CourseWork/lightningFragment.glsl",
+		SHADERDIR "CourseWork/lightningGeom.glsl");
 	hellShader = new Shader(SHADERDIR"skeletonVertexSimple.glsl", 
 		SHADERDIR"skeletonFragment.glsl");
 
@@ -100,20 +102,16 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	terrainNode->SetShader(lightShader);
 	terrainNode->SetHeightMap(&terrainHeightMap);
 	terrainNode->setCastShadows();
-	terrainNode->setRecieveShadows();
 
 	treeNode->SetLight(light);
 	treeNode->SetCamera(camera);
 	treeNode->SetShader(treeShader);
 	treeNode->SetHeightMap(&terrainHeightMap);
 	treeNode->setCastShadows();
-	treeNode->setRecieveShadows();
 
 	oceanNode->SetLight(light);
 	oceanNode->SetCamera(camera);
 	oceanNode->SetShader(reflectShader);
-	//oceanNode->setCastShadows();
-	oceanNode->setRecieveShadows();
 	oceanNode->SetCubeMap(&cubeMap);
 	oceanNode->SetCubeMapFog(&cubeMapFog);
 
@@ -134,7 +132,6 @@ Renderer::Renderer(Window& parent) : OGLRenderer(parent) {
 	}
 
 	std::vector<Mesh*> treeChildren = treeNode->GetOBJ()->getChildren();
-
 
 	SetTextureRepeating(treeNode->GetMesh()->GetTexture(), true);
 	SetTextureRepeating(treeNode->GetMesh()->GetBumpMap(), true);
@@ -229,7 +226,8 @@ void Renderer::reloadShaders()
 		SHADERDIR "CourseWork/RainFragment.glsl",
 		SHADERDIR "CourseWork/RainGeom.glsl");
 	lightningShader = new Shader(SHADERDIR "CourseWork/lightningVertex.glsl",
-		SHADERDIR "CourseWork/lightningFragment.glsl");
+		SHADERDIR "CourseWork/lightningFragment.glsl",
+		SHADERDIR "CourseWork/lightningGeom.glsl");
 	hellShader = new Shader(SHADERDIR"skeletonVertexSimple.glsl",
 		SHADERDIR"skeletonFragment.glsl");
 
@@ -276,10 +274,6 @@ void Renderer::UpdateScene(float msec) {
 
 void Renderer::RenderScene(float msec) {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_P)) {
-		cout << camera->GetPosition() << std::endl;
-	}
 
 	msec -= elapsedTime;
 
@@ -365,7 +359,7 @@ void Renderer::DrawCombinedScene(float msec, int num) {
 		viewMatrix = Matrix4::BuildViewMatrix(
 			light->GetPosition(), Vector3(0, 0, 0));
 
-		cout << light->GetPosition() << std::endl;
+		cout << camera->GetPosition() << std::endl;
 	}
 	else {
 		projMatrix = Matrix4::Perspective(10.0f, 5000.0f,

@@ -36,6 +36,8 @@ public:
 		positions.push_back(Vector3(356.891, 111.245, 492.283));
 		positions.push_back(Vector3(507.036, 145.689, 661.651));
 		positions.push_back(Vector3(695.728, 200.252, 1130.64));
+		positions.push_back(Vector3(-781.5, 1025.06, 27.9713));
+		positions.push_back(Vector3(3204.3, 1375.7, 1831.79));
 
 		manualMovement = false;
 

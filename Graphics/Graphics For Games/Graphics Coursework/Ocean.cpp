@@ -26,19 +26,16 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 		isFoggy = true;
 		elapsedTime = msec;
 	}
-		
 
 	if (drawCount <= 1)
 	{
 		isFoggy = false;
 	}
-		
 
 	r.SetCurrentShader(shader);
 	r.SetShaderLight(*light);
 
 	r.modelMatrix.ToIdentity();
-
 
 	glUniform3fv(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"cameraPos"), 1, (float*)& camera->GetPosition());
@@ -70,10 +67,19 @@ void Ocean::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 	glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 		"isFoggy"), isFoggy);
 
-	//glActiveTexture(GL_TEXTURE11);
-	//glBindTexture(GL_TEXTURE_2D, shadowTex);
-	//glUniform1i(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
-	//	"shadowTex"), 11);
+	glUniform3fv(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+		"lightningPos"), 1, (float*)& lightningPos);
+
+	if (lightningPos != Vector3(0, 0, 0))
+	{
+		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"lightningPLaying"), true);
+	}
+	else
+	{
+		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"lightningPLaying"), false);
+	}
 
 	float heightX = (1000 / 2.0f);
 

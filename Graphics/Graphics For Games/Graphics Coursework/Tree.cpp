@@ -102,6 +102,20 @@ void Tree::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 		glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
 			"zPos"), treePositions[i][1] * TEXTURE_SEPARATION);
 
+		glUniform3fv(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+			"lightningPos"), 1, (float*)& lightningPos);
+
+		if (lightningPos != Vector3(0, 0, 0))
+		{
+			glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+				"lightningPLaying"), true);
+		}
+		else
+		{
+			glUniform1f(glGetUniformLocation(r.GetCurrentShader()->GetProgram(),
+				"lightningPLaying"), false);
+		}
+
 		r.modelMatrix = Matrix4::Translation(Vector3(treePositions[i][0], 0, treePositions[i][1])) * Matrix4::Scale(Vector3(1, 1, 1))
 			* Matrix4::Rotation(treeRotations[i][0], Vector3(0.0f, 1.0f, 0.0f));;
 

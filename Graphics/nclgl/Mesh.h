@@ -22,7 +22,7 @@ public:
 	static Mesh* GenerateQuad();
 	static Mesh* GenerateTerrain();
 	static Mesh* GeneratePoints(int count);
-	static Mesh* GenerateLightningPoints(int count);
+	static Mesh* GenerateLightningPoint();
 
 	void SetTexture(GLuint tex) { texture = tex; }
 	GLuint GetTexture() { return texture; }
@@ -53,7 +53,7 @@ public:
 	Vector3* getVertices() { return vertices; }
 	GLuint getNumVertices() { return numVertices; }
 
-	void repositionPoints();
+	void repositionPoint();
 
 protected:
 	void BufferData();

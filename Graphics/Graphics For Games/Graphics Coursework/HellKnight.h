@@ -20,8 +20,6 @@ public:
 
 protected:
 
-	OBJMesh* tree;
-
 	Shader* shader;
 	Light* light;
 	Camera* camera;

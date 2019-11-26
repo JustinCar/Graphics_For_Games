@@ -56,12 +56,16 @@ public:
 	void setRecieveShadows() { recieveShadows = true; };
 	bool getRecieveShadows() { return recieveShadows; };
 
+	void setLightningPosition(Vector3 l) { lightningPos = l; };
+
 protected:
 
 	bool castShadows;
 	bool recieveShadows;
 
 	float elapsedTime;
+
+	Vector3 lightningPos;
 
 	SceneNode* parent;
 	Mesh* mesh;

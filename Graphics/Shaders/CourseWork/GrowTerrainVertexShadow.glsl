@@ -15,6 +15,9 @@ in vec3 normal;
 in vec3 tangent;
 in vec2 texCoord;
 
+uniform vec3 lightningPos;
+uniform bool lightningPLaying;
+
 out Vertex {
     vec4 colour;
     vec2 texCoord;
@@ -69,18 +72,15 @@ void main ( void ) {
     vec4 toCam = viewMatrix * vec4(OUT.worldPos, 1.0);
     float dis = length(toCam.xyz);
 
-    // float densityInc = 0;
-    // densityInc += (0.000001 * time);
-
-    // if(densityInc >= density)
-    // {
-    //     densityInc = density;
-    // }
     OUT.visibility = exp(-pow((dis * density), gradient));
 
+     if (lightningPLaying) 
+    {
+        vec3 toLightning = OUT.worldPos - lightningPos;
+        float lightningDis = length(toLightning);
+        OUT.visibility += exp(-pow((lightningDis * 0.0025), gradient));
+    }
     OUT.visibility = clamp(OUT.visibility, 0.0, 1.0);
-
-    
     //--------------------------------------------------
 
     OUT.shadowProj = ( shadowMatrix * vec4 ( newPosition +( normal *1.5) ,1));

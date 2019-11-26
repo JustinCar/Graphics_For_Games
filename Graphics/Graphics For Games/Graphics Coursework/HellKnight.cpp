@@ -13,7 +13,7 @@ HellKnight::HellKnight()
 void HellKnight::Draw(OGLRenderer& r, float msec, GLuint shadowTex, int drawCount)
 {
 
-	if (drawCount < 3)
+	if (drawCount < 4)
 		return;
 
 	glEnable(GL_CULL_FACE);

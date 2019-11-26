@@ -4,6 +4,8 @@
 #include "../../NCLGL/SceneNode.h"
 #include "../../nclgl/OBJMesh.h"
 
+// Tree:
+// https://assetstore.unity.com/packages/3d/environments/fantasy/fantasy-forest-environment-free-demo-35361
 class Tree : public SceneNode {
 public:
 	Tree();

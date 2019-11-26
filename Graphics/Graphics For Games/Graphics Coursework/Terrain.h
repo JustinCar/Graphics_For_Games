@@ -3,6 +3,12 @@
 #include "../../NCLGL/Camera.h"
 #include "../../NCLGL/SceneNode.h"
 
+// Height maps:
+// https://forums.unrealengine.com/development-discussion/modding/ark-survival-evolved/92497-duke-s-free-heightmaps
+//
+// Textures:
+// https://assetstore.unity.com/publishers/16677
+
 class Terrain : public SceneNode {
 public:
 	Terrain();

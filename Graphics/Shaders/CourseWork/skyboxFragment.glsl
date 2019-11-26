@@ -6,6 +6,7 @@ uniform vec3 cameraPos;
 uniform float time;
 uniform bool blendBoxes;
 
+
 in Vertex {
     vec3 normal;
 } IN;

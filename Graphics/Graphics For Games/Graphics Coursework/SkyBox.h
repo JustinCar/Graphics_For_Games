@@ -4,6 +4,8 @@
 #include "../../NCLGL/SceneNode.h"
 #include "../../nclgl/OBJMesh.h"
 
+// Sky box:
+// https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014
 class SkyBox : public SceneNode {
 public:
 	SkyBox();
