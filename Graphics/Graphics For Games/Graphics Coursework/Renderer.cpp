@@ -293,7 +293,7 @@ void Renderer::RenderScene(float msec) {
 
 	// reset
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RETURN)) {
-		elapsedTime = msec - startTime * 1000;
+		elapsedTime += msec - startTime * 1000;
 		drawCount = -1;
 	}
 

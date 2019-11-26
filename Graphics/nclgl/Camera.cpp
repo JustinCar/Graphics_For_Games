@@ -108,19 +108,19 @@ void Camera::manualMove(float msec)
 		roll += 1.0f;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_3)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_5)) {
 		xSpeed += 0.1f;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_4)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_6)) {
 		xSpeed -= 0.1f;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_5)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_7)) {
 		ySpeed += 0.1f;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_6)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_8)) {
 		ySpeed -= 0.1f;
 	}
 

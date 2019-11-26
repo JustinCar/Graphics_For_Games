@@ -1,26 +1,3 @@
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\nclgl.pdb
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\nclgl.idb
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\shader.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\scenenode.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\quaternion.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\plane.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\oglrenderer.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\objmesh.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\mouse.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\mesh.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\md5node.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\md5mesh.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\md5filedata.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\md5anim.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\matrix4.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\light.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\keyboard.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\heightmap.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\gametimer.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\frustum.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\cuberobot.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\camera.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\nclgl\debug\window.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.pdb
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.idb
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\shader.obj
@@ -31,11 +8,11 @@ c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\oglre
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\objmesh.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\mouse.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\mesh.obj
+c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\matrix4.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5node.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5mesh.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5filedata.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\md5anim.obj
-c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\matrix4.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\light.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\keyboard.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\heightmap.obj
@@ -44,8 +21,8 @@ c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\frust
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\cuberobot.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\camera.obj
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\window.obj
-c:\users\justin\documents\gamedev\projects\graphics_for_games\graphics\graphics for games\debug\nclgl.lib
 c:\users\b6038386\documents\github\graphics_for_games\graphics\graphics for games\debug\nclgl.lib
+c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\oglrenderer.new.obj.enc
 c:\users\b6038386\documents\github\graphics_for_games\graphics\graphics for games\debug\nclgl.pdb
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.command.1.tlog
 c:\users\b6038386\documents\github\graphics_for_games\graphics\nclgl\debug\nclgl.tlog\cl.read.1.tlog

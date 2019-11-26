@@ -1,17 +1,1 @@
-﻿  Renderer.cpp
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(29,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(32,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(33,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(34,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(35,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(36,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(37,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(38,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(39,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(40,1): warning C4305:  'argument': truncation from 'double' to 'const float'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Camera.h(50,18): warning C4018:  '<': signed/unsigned mismatch
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(9,1): warning C4005:  'RAW_WIDTH': macro redefinition
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Mesh.h(10): message :  see previous definition of 'RAW_WIDTH'
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\HeightMap.h(10,1): warning C4005:  'RAW_HEIGHT': macro redefinition
-C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\NCLGL\Mesh.h(11): message :  see previous definition of 'RAW_HEIGHT'
-  GraphicsCoursework.vcxproj -> C:\Users\b6038386\Documents\GitHub\Graphics_For_Games\Graphics\Graphics For Games\Debug\GraphicsCoursework.exe
+﻿
