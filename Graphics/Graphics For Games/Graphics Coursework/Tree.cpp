@@ -8,7 +8,7 @@ Tree::Tree()
 
 	terrainHeightMap = 0;
 
-	numTrees = 1000;
+	numTrees = 500;
 	tree = new OBJMesh(MESHDIR "CourseWork/TreeHD.obj");
 	mesh = tree;
 
